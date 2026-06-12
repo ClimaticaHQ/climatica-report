@@ -1,0 +1,643 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{fick2017worldclim}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=a4d42fd952a01eab582d1d0891f1c613}{%
+           family={Fick},
+           familyi={F\bibinitperiod},
+           given={Stephen\bibnamedelima E.},
+           giveni={S\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=9b0a2427b5a45d44474b8316d0d9aad7}{%
+           family={Hijmans},
+           familyi={H\bibinitperiod},
+           given={Robert\bibnamedelima J.},
+           giveni={R\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{fullhash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{fullhashraw}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{bibnamehash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{authorbibnamehash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{authornamehash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{authorfullhash}{44c9292ccbe4a0768a1f988273443f87}
+      \strng{authorfullhashraw}{44c9292ccbe4a0768a1f988273443f87}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Climatology}
+      \field{number}{12}
+      \field{title}{{WorldClim 2}: new 1-km spatial resolution climate surfaces for global land areas}
+      \field{volume}{37}
+      \field{year}{2017}
+      \field{pages}{4302\bibrangedash 4315}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1002/joc.5086
+      \endverb
+    \endentry
+    \entry{scrapi}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=c76c256dc8a10364d374b645c5325196}{%
+           family={Vega\bibnamedelima Gorgojo},
+           familyi={V\bibinitperiod\bibinitdelim G\bibinitperiod},
+           given={Guillermo},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{c76c256dc8a10364d374b645c5325196}
+      \strng{fullhash}{c76c256dc8a10364d374b645c5325196}
+      \strng{fullhashraw}{c76c256dc8a10364d374b645c5325196}
+      \strng{bibnamehash}{c76c256dc8a10364d374b645c5325196}
+      \strng{authorbibnamehash}{c76c256dc8a10364d374b645c5325196}
+      \strng{authornamehash}{c76c256dc8a10364d374b645c5325196}
+      \strng{authorfullhash}{c76c256dc8a10364d374b645c5325196}
+      \strng{authorfullhashraw}{c76c256dc8a10364d374b645c5325196}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://scrapi.gsic.uva.es}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{{WorldClim Virtual Semantic API (SCRAPI)}}
+      \field{year}{2025}
+    \endentry
+    \entry{climatecharts}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=87d4e368fda365c8f9ec890af581dd37}{%
+           family={{Climate-Charts.net}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{fullhash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{fullhashraw}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{bibnamehash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{authorbibnamehash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{authornamehash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{authorfullhash}{87d4e368fda365c8f9ec890af581dd37}
+      \strng{authorfullhashraw}{87d4e368fda365c8f9ec890af581dd37}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://climatecharts.net}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Climate Charts --- Walter-Lieth climatograms for locations worldwide}
+    \endentry
+    \entry{climatedataorg}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=58708d27196c5f4d0375df446878073e}{%
+           family={{Climate-Data.org}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{58708d27196c5f4d0375df446878073e}
+      \strng{fullhash}{58708d27196c5f4d0375df446878073e}
+      \strng{fullhashraw}{58708d27196c5f4d0375df446878073e}
+      \strng{bibnamehash}{58708d27196c5f4d0375df446878073e}
+      \strng{authorbibnamehash}{58708d27196c5f4d0375df446878073e}
+      \strng{authornamehash}{58708d27196c5f4d0375df446878073e}
+      \strng{authorfullhash}{58708d27196c5f4d0375df446878073e}
+      \strng{authorfullhashraw}{58708d27196c5f4d0375df446878073e}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://en.climate-data.org}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Climate-Data.org --- Climate information for cities worldwide}
+    \endentry
+    \entry{meteoblue}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=2d78388eabc9e79ab5943d4f406283e6}{%
+           family={{meteoblue AG}},
+           familyi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{fullhash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{fullhashraw}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{bibnamehash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{authorbibnamehash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{authornamehash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{authorfullhash}{2d78388eabc9e79ab5943d4f406283e6}
+      \strng{authorfullhashraw}{2d78388eabc9e79ab5943d4f406283e6}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.meteoblue.com}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Meteoblue --- weather close to you}
+    \endentry
+    \entry{koppen}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=06dc3eebde0527488fb7fb0fcc5645ad}{%
+           family={Kottek},
+           familyi={K\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+        {{hash=20493e770e62f7f09d9390e70ee674cb}{%
+           family={Grieser},
+           familyi={G\bibinitperiod},
+           given={Jürgen},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d18c57a4ceacc6af34aa41c550b36c54}{%
+           family={Beck},
+           familyi={B\bibinitperiod},
+           given={Christoph},
+           giveni={C\bibinitperiod}}}%
+        {{hash=964baea72a747b74aa65a353a01d75fe}{%
+           family={Rudolf},
+           familyi={R\bibinitperiod},
+           given={Bruno},
+           giveni={B\bibinitperiod}}}%
+        {{hash=47e29d2ac7bd1e60dd37ae43683b107d}{%
+           family={Rubel},
+           familyi={R\bibinitperiod},
+           given={Franz},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{a9dbfb69e4f603fecd790901f966d0be}
+      \strng{fullhash}{0ad21b236d6c8a8f9d2e1f71b1d7284a}
+      \strng{fullhashraw}{0ad21b236d6c8a8f9d2e1f71b1d7284a}
+      \strng{bibnamehash}{a9dbfb69e4f603fecd790901f966d0be}
+      \strng{authorbibnamehash}{a9dbfb69e4f603fecd790901f966d0be}
+      \strng{authornamehash}{a9dbfb69e4f603fecd790901f966d0be}
+      \strng{authorfullhash}{0ad21b236d6c8a8f9d2e1f71b1d7284a}
+      \strng{authorfullhashraw}{0ad21b236d6c8a8f9d2e1f71b1d7284a}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Meteorologische Zeitschrift}
+      \field{number}{3}
+      \field{title}{World Map of the {Köppen-Geiger} Climate Classification Updated}
+      \field{volume}{15}
+      \field{year}{2006}
+      \field{pages}{259\bibrangedash 263}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1127/0941-2948/2006/0130
+      \endverb
+    \endentry
+    \entry{beck2018koppen}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=d7dcede9d412a3d8fa3b91daafdbea4d}{%
+           family={Beck},
+           familyi={B\bibinitperiod},
+           given={Hylke\bibnamedelima E.},
+           giveni={H\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=81daf64e46b81abb6f841138d926146f}{%
+           family={Zimmermann},
+           familyi={Z\bibinitperiod},
+           given={Niklaus\bibnamedelima E.},
+           giveni={N\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=2c2328aae86c1cf0e3d05bbea9d110ef}{%
+           family={McVicar},
+           familyi={M\bibinitperiod},
+           given={Tim\bibnamedelima R.},
+           giveni={T\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=f79570846ed8d2a24573e084be6e965e}{%
+           family={Vergopolan},
+           familyi={V\bibinitperiod},
+           given={Noemi},
+           giveni={N\bibinitperiod}}}%
+        {{hash=587df6707a0fd9b64fe724532e0ce33a}{%
+           family={Berg},
+           familyi={B\bibinitperiod},
+           given={Alexis},
+           giveni={A\bibinitperiod}}}%
+        {{hash=09cb92f650177d93378de234da09b8b6}{%
+           family={Wood},
+           familyi={W\bibinitperiod},
+           given={Eric\bibnamedelima F.},
+           giveni={E\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{c9286f511ee23531fbc805c3f15e5758}
+      \strng{fullhash}{7a25e7b829bbdef329bdd3a9f62f14fe}
+      \strng{fullhashraw}{7a25e7b829bbdef329bdd3a9f62f14fe}
+      \strng{bibnamehash}{c9286f511ee23531fbc805c3f15e5758}
+      \strng{authorbibnamehash}{c9286f511ee23531fbc805c3f15e5758}
+      \strng{authornamehash}{c9286f511ee23531fbc805c3f15e5758}
+      \strng{authorfullhash}{7a25e7b829bbdef329bdd3a9f62f14fe}
+      \strng{authorfullhashraw}{7a25e7b829bbdef329bdd3a9f62f14fe}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Data}
+      \field{title}{Present and future {K}öppen-Geiger climate classification maps at 1-km resolution}
+      \field{volume}{5}
+      \field{year}{2018}
+      \field{pages}{180214}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/sdata.2018.214
+      \endverb
+    \endentry
+    \entry{giovanni}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=09baa0a61c04e88802e524ce9a79f6dd}{%
+           family={{NASA GES DISC}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{fullhash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{fullhashraw}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{bibnamehash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{authorbibnamehash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{authornamehash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{authorfullhash}{09baa0a61c04e88802e524ce9a79f6dd}
+      \strng{authorfullhashraw}{09baa0a61c04e88802e524ce9a79f6dd}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://giovanni.gsfc.nasa.gov}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Giovanni: The Bridge Between Data and Science}
+    \endentry
+    \entry{copernicus}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=2fd6936740d7f73a6a52c8ddf6c903e6}{%
+           family={{Copernicus Climate Change Service (C3S)}},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{fullhash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{fullhashraw}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{bibnamehash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{authorbibnamehash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{authornamehash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{authorfullhash}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \strng{authorfullhashraw}{2fd6936740d7f73a6a52c8ddf6c903e6}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://cds.climate.copernicus.eu}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Copernicus Climate Data Store}
+      \field{year}{2018}
+    \endentry
+    \entry{hutchinson1995}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=6e345677666534e4170fd2557df4c422}{%
+           family={Hutchinson},
+           familyi={H\bibinitperiod},
+           given={Michael\bibnamedelima F.},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e345677666534e4170fd2557df4c422}
+      \strng{fullhash}{6e345677666534e4170fd2557df4c422}
+      \strng{fullhashraw}{6e345677666534e4170fd2557df4c422}
+      \strng{bibnamehash}{6e345677666534e4170fd2557df4c422}
+      \strng{authorbibnamehash}{6e345677666534e4170fd2557df4c422}
+      \strng{authornamehash}{6e345677666534e4170fd2557df4c422}
+      \strng{authorfullhash}{6e345677666534e4170fd2557df4c422}
+      \strng{authorfullhashraw}{6e345677666534e4170fd2557df4c422}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Geographical Information Systems}
+      \field{number}{4}
+      \field{title}{Interpolating mean rainfall using thin plate smoothing splines}
+      \field{volume}{9}
+      \field{year}{1995}
+      \field{pages}{385\bibrangedash 403}
+      \range{pages}{19}
+      \verb{doi}
+      \verb 10.1080/02693799508902045
+      \endverb
+    \endentry
+    \entry{harris2020cru}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=079fff28141d5a7c4e89a2184afc9138}{%
+           family={Harris},
+           familyi={H\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+        {{hash=4ad04daaecfad0adc189a86ab6b2571d}{%
+           family={Osborn},
+           familyi={O\bibinitperiod},
+           given={Timothy\bibnamedelima J.},
+           giveni={T\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=37c4627449b6e46082f8a6334abd865b}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Phil},
+           giveni={P\bibinitperiod}}}%
+        {{hash=0efb97d817e6f0766901b8905720fc3b}{%
+           family={Lister},
+           familyi={L\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{11663d0eb7f48cf87e0205c7bbf1a70a}
+      \strng{fullhash}{50564cdfc1a31bba77cdea6929c9a935}
+      \strng{fullhashraw}{50564cdfc1a31bba77cdea6929c9a935}
+      \strng{bibnamehash}{11663d0eb7f48cf87e0205c7bbf1a70a}
+      \strng{authorbibnamehash}{11663d0eb7f48cf87e0205c7bbf1a70a}
+      \strng{authornamehash}{11663d0eb7f48cf87e0205c7bbf1a70a}
+      \strng{authorfullhash}{50564cdfc1a31bba77cdea6929c9a935}
+      \strng{authorfullhashraw}{50564cdfc1a31bba77cdea6929c9a935}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Data}
+      \field{title}{Version 4 of the {CRU TS} monthly high-resolution gridded multivariate climate dataset}
+      \field{volume}{7}
+      \field{year}{2020}
+      \field{pages}{109}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/s41597-020-0453-3
+      \endverb
+    \endentry
+    \entry{w3c_spatial}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=446a1ae6601a5c59360c7d591c3992da}{%
+           family={{W3C}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{fullhash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{fullhashraw}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{bibnamehash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{authorbibnamehash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{authornamehash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{authorfullhash}{446a1ae6601a5c59360c7d591c3992da}
+      \strng{authorfullhashraw}{446a1ae6601a5c59360c7d591c3992da}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.w3.org/TR/sdw-bp/}}
+      \field{note}{W3C Working Group Note. Accessed: May 2026}
+      \field{title}{Spatial Data on the Web Best Practices}
+      \field{year}{2017}
+    \endentry
+    \entry{wikidata}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=28b6ba9f3638a296385fabdb51df1580}{%
+           family={{Wikimedia Foundation}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{fullhash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{fullhashraw}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{bibnamehash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{authorbibnamehash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{authornamehash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{authorfullhash}{28b6ba9f3638a296385fabdb51df1580}
+      \strng{authorfullhashraw}{28b6ba9f3638a296385fabdb51df1580}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.wikidata.org}}
+      \field{note}{Accessed: May 2026}
+      \field{title}{Wikidata: a free and open knowledge base}
+      \field{year}{2012}
+    \endentry
+    \entry{bernerslee2001}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=d469e0df304c98f67b55d087ea6187a1}{%
+           family={Berners-Lee},
+           familyi={B\bibinithyphendelim L\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+        {{hash=b03c1c11511fa3c1c6224a741f227be4}{%
+           family={Hendler},
+           familyi={H\bibinitperiod},
+           given={James},
+           giveni={J\bibinitperiod}}}%
+        {{hash=fb144ce9931b409b1bdccdff7d3a4ecd}{%
+           family={Lassila},
+           familyi={L\bibinitperiod},
+           given={Ora},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{fullhash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{fullhashraw}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{bibnamehash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{authorbibnamehash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{authornamehash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{authorfullhash}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \strng{authorfullhashraw}{f4ea8e196bdf65a991bf6b05075d7d62}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific American}
+      \field{number}{5}
+      \field{title}{The Semantic Web}
+      \field{volume}{284}
+      \field{year}{2001}
+      \field{pages}{34\bibrangedash 43}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1038/scientificamerican0501-34
+      \endverb
+    \endentry
+    \entry{rdf11}{report}{}{}
+      \name{author}{3}{}{%
+        {{hash=ff065518eacac535eec041c322c21896}{%
+           family={Cyganiak},
+           familyi={C\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=ad0aae768a1174aba9738b6d2719985b}{%
+           family={Wood},
+           familyi={W\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=d91ccb882c2defa0b7d5801d3486fe95}{%
+           family={Lanthaler},
+           familyi={L\bibinitperiod},
+           given={Markus},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {W3C}%
+      }
+      \strng{namehash}{6150123d390d138e88985af00327f937}
+      \strng{fullhash}{6150123d390d138e88985af00327f937}
+      \strng{fullhashraw}{6150123d390d138e88985af00327f937}
+      \strng{bibnamehash}{6150123d390d138e88985af00327f937}
+      \strng{authorbibnamehash}{6150123d390d138e88985af00327f937}
+      \strng{authornamehash}{6150123d390d138e88985af00327f937}
+      \strng{authorfullhash}{6150123d390d138e88985af00327f937}
+      \strng{authorfullhashraw}{6150123d390d138e88985af00327f937}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{RDF} 1.1 Concepts and Abstract Syntax}
+      \field{type}{W3C Recommendation}
+      \field{year}{2014}
+      \verb{urlraw}
+      \verb https://www.w3.org/TR/rdf11-concepts/
+      \endverb
+      \verb{url}
+      \verb https://www.w3.org/TR/rdf11-concepts/
+      \endverb
+    \endentry
+    \entry{sparql11}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=dad88e15878a9c1b972860de786ecb0f}{%
+           family={Harris},
+           familyi={H\bibinitperiod},
+           given={Steve},
+           giveni={S\bibinitperiod}}}%
+        {{hash=b0f2e76dd842dc9052f49422b3cc10e6}{%
+           family={Seaborne},
+           familyi={S\bibinitperiod},
+           given={Andy},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {W3C}%
+      }
+      \strng{namehash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{fullhash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{fullhashraw}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{bibnamehash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{authorbibnamehash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{authornamehash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{authorfullhash}{68bf583a91a8b75902eca5546c7668b8}
+      \strng{authorfullhashraw}{68bf583a91a8b75902eca5546c7668b8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{SPARQL} 1.1 Query Language}
+      \field{type}{W3C Recommendation}
+      \field{year}{2013}
+      \verb{urlraw}
+      \verb https://www.w3.org/TR/sparql11-query/
+      \endverb
+      \verb{url}
+      \verb https://www.w3.org/TR/sparql11-query/
+      \endverb
+    \endentry
+    \entry{linkeddata}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=d469e0df304c98f67b55d087ea6187a1}{%
+           family={Berners-Lee},
+           familyi={B\bibinithyphendelim L\bibinitperiod},
+           given={Tim},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{fullhash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{fullhashraw}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{bibnamehash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{authorbibnamehash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{authornamehash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{authorfullhash}{d469e0df304c98f67b55d087ea6187a1}
+      \strng{authorfullhashraw}{d469e0df304c98f67b55d087ea6187a1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://www.w3.org/DesignIssues/LinkedData.html}}
+      \field{note}{W3C Design Issues. Accessed: May 2026}
+      \field{title}{Linked Data}
+      \field{year}{2006}
+    \endentry
+    \entry{owl2}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=cb320ec3867effa6aeda100c390936b2}{%
+           family={{W3C OWL Working Group}},
+           familyi={W\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {W3C}%
+      }
+      \strng{namehash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{fullhash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{fullhashraw}{cb320ec3867effa6aeda100c390936b2}
+      \strng{bibnamehash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{authorbibnamehash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{authornamehash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{authorfullhash}{cb320ec3867effa6aeda100c390936b2}
+      \strng{authorfullhashraw}{cb320ec3867effa6aeda100c390936b2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{OWL} 2 Web Ontology Language Primer}
+      \field{type}{W3C Recommendation}
+      \field{year}{2012}
+      \verb{urlraw}
+      \verb https://www.w3.org/TR/owl2-primer/
+      \endverb
+      \verb{url}
+      \verb https://www.w3.org/TR/owl2-primer/
+      \endverb
+    \endentry
+    \entry{walter1960}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=07281247e078540a41edd1429dc5b781}{%
+           family={Walter},
+           familyi={W\bibinitperiod},
+           given={Heinrich},
+           giveni={H\bibinitperiod}}}%
+        {{hash=bba72bdf82a0be672d70542eac1178f1}{%
+           family={Lieth},
+           familyi={L\bibinitperiod},
+           given={Helmut},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Jena}%
+      }
+      \list{publisher}{1}{%
+        {Gustav Fischer}%
+      }
+      \strng{namehash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{fullhash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{fullhashraw}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{bibnamehash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{authorbibnamehash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{authornamehash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{authorfullhash}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \strng{authorfullhashraw}{58b0f91a7956bb8e5009aef7b409d7d1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Klimadiagramm-Weltatlas}
+      \field{year}{1960}
+    \endentry
+  \enddatalist
+  \missing{bangor2009sus}
+  \missing{brooke1996sus}
+  \missing{geonames}
+  \missing{reichheld2003nps}
+  \missing{sauro2012sus}
+  \missing{tullis2004sus}
+\endrefsection
+\endinput
+
