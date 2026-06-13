@@ -1,0 +1,129 @@
+% ─── CHAPTER 1 ────────────────────────────────────────────────────────────────
+\chapter{Introduction}\label{INTRO}
+
+\section{Motivation and Background}\label{INTRO_MOT}
+
+Climate change is one of the defining challenges of the twenty-first century.
+Understanding historical climate patterns --- temperature trends, precipitation
+cycles, and the differences between regions --- is an essential first step for
+researchers, educators, policymakers, and the general public alike. Yet access
+to high-quality climate data remains, in practice, restricted to those with
+specialist GIS or programming skills. Datasets such as
+WorldClim~\cite{fick2017worldclim} provide kilometre-scale rasters of monthly
+temperature and precipitation going back to 1960, but querying them
+traditionally requires desktop software, custom scripts, or academic
+subscriptions.
+
+At the same time, the web platform has matured to the point where rich,
+interactive data exploration can be delivered entirely in the browser, with no
+installation and no registration. Modern JavaScript frameworks, vector-tile
+mapping libraries, and reactive data-fetching primitives make it possible to
+build tools that would previously have required a dedicated server-side
+pipeline. The WorldClim group at the Universidad de Valladolid has developed a
+Virtual Semantic API~\cite{scrapi} that exposes its raster archive as a
+SPARQL-compatible REST service, opening the door to exactly this kind of
+lightweight, client-only integration.
+
+Despite these advances, no general-purpose, browser-based tool exists that
+allows a non-specialist user to look up a city by name, inspect its monthly
+climate profile, compare it to another city, explore how its climate has shifted
+across historical periods, or visualise the spatial distribution of a climate
+variable across an entire region --- all within a single, cohesive interface.
+Climatica was designed to fill that gap.
+
+\section{Objectives}\label{INTRO_OBJ}
+
+The primary objective of this internship project was to design, implement, and
+evaluate a web application that makes WorldClim historical climate data
+accessible and explorable for non-specialist users, operating entirely in the
+browser without requiring registration, local software installation, or GIS
+expertise.
+
+The specific objectives were as follows:
+
+\begin{enumerate}
+  \item \textbf{City climate profile.} Enable a user to search for any city in
+    the world by name and view a complete monthly climate profile, including
+    minimum temperature, maximum temperature, average temperature, and
+    precipitation, together with a Walter-Lieth climatogram for rapid climate
+    classification.
+
+  \item \textbf{City comparison.} Allow side-by-side comparison of the climate
+    profiles of two cities, with overlaid charts that make seasonal differences
+    immediately visible.
+
+  \item \textbf{Period comparison.} Expose the five historical time periods
+    available in WorldClim (1960--1990, 1970--2000, 1980--2010, 1990--2020,
+    and the long-term baseline) so that a user can observe trends in a city's
+    climate across decades.
+
+  \item \textbf{Regional heatmap.} Provide an interactive map on which the user
+    can draw a bounding box or polygon and view a spatially resolved heatmap of
+    any climate variable for any month, rendered directly from WorldClim raster
+    data.
+
+  \item \textbf{Front-end only architecture.} Implement the application as a
+    single-page application that communicates directly with the WorldClim
+    Virtual Semantic API and the Wikidata API, without developing a custom
+    back-end. An early design considered wrapping the WorldClim API in a
+    NestJS layer with a database and response caching, but this was set aside
+    in favour of delivering a fully functional front-end within the available
+    time.
+
+  \item \textbf{Internationalisation.} Deliver the interface in at least two
+    languages; the final implementation supports English, Spanish, and
+    Ukrainian.
+\end{enumerate}
+
+\section{Methodology}\label{INTRO_MET}
+
+The project followed an iterative, prototype-driven development process
+organised into four broad phases.
+
+\textbf{Phase 1 --- Research and scoping.} The first two weeks were devoted to
+understanding the WorldClim Virtual Semantic API and the Wikidata knowledge
+graph, surveying existing climate visualisation tools (see
+Chapter~\ref{REL}), and agreeing the functional scope with the supervisor.
+User stories were collected and translated into a set of functional and
+non-functional requirements (Section~\ref{APP_REQ}).
+
+\textbf{Phase 2 --- Architecture and technology selection.} Based on the
+requirements, the technology stack was chosen (Section~\ref{APP_TECH}) and
+the application architecture was defined (Section~\ref{APP_ARCH}). The key
+architectural decision --- to build a front-end-only application that calls
+the WorldClim and Wikidata APIs directly --- was validated against the
+WorldClim API documentation and confirmed with the supervisor.
+
+\textbf{Phase 3 --- Iterative implementation.} The four application pages were
+implemented one at a time, starting with the City Climate page as it exercised
+the core API integration and chart rendering. Each page was demonstrated to the
+supervisor at fortnightly meetings, feedback was collected, and the next
+iteration began. This phase constituted the majority of the 400 working hours.
+
+\textbf{Phase 4 --- Evaluation and documentation.} A usability evaluation was
+conducted with representative users (Section~\ref{EVAL}), the results were
+analysed, and this report was written.
+
+Throughout all phases the codebase was managed with Git and hosted on GitHub,
+with a linear commit history that maps directly to the phases above.
+
+\section{Structure of the Document}\label{INTRO_EST}
+
+The remainder of this report is organised as follows.
+
+Chapter~\ref{REL} reviews related work, covering existing climate data portals
+and visualisation tools as well as the two external services on which Climatica
+depends most heavily: the WorldClim dataset and its Virtual Semantic API, and
+the Wikidata knowledge graph.
+
+Chapter~\ref{APP} describes the application itself. It begins with the
+functional and non-functional requirements, continues with the data model and
+architectural decisions, details the technology choices and their rationale, and
+concludes with a walkthrough of the four implemented pages.
+
+Chapter~\ref{EVAL} presents the evaluation. It covers the demo scenarios used
+to exercise the application, a usability study conducted with target users, and
+a discussion of limitations and potential improvements.
+
+Chapter~\ref{CONC} summarises the conclusions, reflects on whether the project
+objectives were met, and outlines directions for future work.

@@ -1,0 +1,50 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Climate science relies on large raster datasets that are rarely accessible to
+non-specialist users. Existing tools either require GIS expertise or offer only
+static visualisations with no ability to compare locations or time periods
+interactively.
+
+This report describes the design and implementation of \textbf{Climatica}, a
+web application developed during a 400-hour internship at the Universidad de
+Valladolid. Climatica provides interactive access to WorldClim historical
+climate data through four pages: a single-city climate profile with a
+Walter-Lieth climatogram, a side-by-side city comparison, a multi-period
+climate change explorer, and a regional heatmap renderer. City search is
+backed by a locally hosted Apache Solr index built from GeoNames data, and
+all external API calls are proxied through Next.js server-side route handlers
+with Redis caching.
+
+The system was implemented using Next.js~16, React~19, TypeScript, Leaflet,
+and Recharts, and is delivered in three locales (English, Spanish, and
+Ukrainian). Key technical contributions include a client-side Walter-Lieth
+diagram built from scratch with SVG \texttt{clipPath} masking, a raster
+heatmap engine that parses WorldClim pixel IRIs to reconstruct geographic
+tile bounds, and a trigram-based city search pipeline backed by a GeoNames
+index of over 12~million populated places.
+
+\vspace{0.5cm}
+\noindent\textbf{Keywords:} \palabrasClave
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+I would like to thank my supervisors, Guillermo Vega Gorgojo and Eduardo
+Gómez Sánchez, for their guidance, patience, and consistently insightful
+feedback throughout this internship. Guillermo's expertise in semantic web
+technologies shaped the architecture of this project in fundamental ways,
+and Eduardo's thorough and detailed review of the application was invaluable
+in identifying issues and guiding improvements.
+
+% TODO: add acknowledgement for Natalia (role, surname)
+
+I am also grateful to the research group at the Universidad de Valladolid for
+welcoming me and providing a stimulating environment in which to work.
+
+Finally, I thank my family and friends for their support during my time abroad
+in Valladolid.
+
+\tableofcontents
+\listoffigures
+\listoftables
