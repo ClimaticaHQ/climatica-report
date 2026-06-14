@@ -236,36 +236,7 @@ relies on proprietary data and targets professional users. Climatica would be
 the only tool in this survey that combines ease of use with interactive multi-view
 exploration of open, globally consistent raster data.
 
-Figures~\ref{fig:screenshot_climatica_a} and~\ref{fig:screenshot_climatica_b}
-show the City Climate page of Climatica for Valladolid, illustrating the map
-view, standard climograph, and Walter-Lieth climatogram.
-\begin{figure}[t]
-  \centering
-  \subfigure[Map view with location pin, raster cell outline, and summary stat
-  cards.]{
-    \includegraphics[width=0.9\textwidth]{Images/climatica-map.png}
-  }
-  \subfigure[Standard climograph: precipitation bars (blue/yellow) and
-  temperature lines for the selected city.]{
-    \includegraphics[width=0.9\textwidth]{Images/climatica-columns-graph.png}
-  }
-  \caption{Climatica City Climate page for Valladolid (weather dataset, year
-  1991) --- map and standard climograph views.}
-  \label{fig:screenshot_climatica_a}
-\end{figure}
-
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-walter-lieth.png}
-  \caption{Climatica City Climate page --- Walter-Lieth climatogram for the
-    same city and period. Yellow areas indicate arid months (summer); blue areas
-    indicate humid months (winter and spring). The chart uses SVG
-    \texttt{clipPath} with the even-odd winding rule to produce exact arid/humid
-  fills without computing curve intersection points explicitly.}
-  \label{fig:screenshot_climatica_b}
-\end{figure}
-
-\begin{table}[H]
+\begin{sidewaystable}[p]
   \centering
   \caption{Comparison of climate data tools.
   \cmark~=~supported, \pmark~=~partial, \xmark~=~not supported.}
@@ -281,26 +252,23 @@ view, standard climograph, and Walter-Lieth climatogram.
     \textbf{\shortstack{Copernicus\\C3S}} &
     \textbf{Climatica} \\
     \midrule
-    City climate profile      & \cmark & \cmark & \cmark  & \xmark &
-    \xmark & \cmark \\
-    Walter-Lieth climatogram  & \cmark & \cmark & \xmark  & \xmark &
-    \xmark & \cmark \\
-    Multi-city comparison     & \xmark & \xmark & \pmark  & \xmark &
-    \xmark & \cmark \\
-    Period trend comparison   & \xmark & \xmark & \pmark  & \cmark &
-    \cmark & \cmark \\
-    Regional spatial heatmap  & \xmark & \xmark & \xmark  & \cmark &
-    \cmark & \cmark \\
-    Open km-scale data        & \xmark & \xmark & \xmark  & \cmark &
-    \cmark & \cmark \\
-    No registration required  & \cmark & \cmark & \pmark  & \xmark &
-    \xmark & \cmark \\
-    Non-specialist audience   & \cmark & \cmark & \xmark  & \xmark &
-    \xmark & \cmark \\
+    City climate profile     & \cmark & \cmark & \cmark & \xmark & \xmark & \cmark \\
+    Walter-Lieth climatogram & \cmark & \cmark & \xmark & \xmark & \xmark & \cmark \\
+    Multi-city comparison    & \xmark & \xmark & \pmark & \xmark & \xmark & \cmark \\
+    Period trend comparison  & \xmark & \xmark & \pmark & \cmark & \cmark & \cmark \\
+    Regional spatial heatmap & \xmark & \xmark & \xmark & \cmark & \cmark & \cmark \\
+    No registration required & \cmark & \cmark & \pmark & \xmark & \xmark & \cmark \\
+    Non-specialist audience  & \cmark & \cmark & \xmark & \xmark & \xmark & \cmark \\
+    \midrule
+    Scope                    & World  & World  & World  & World  & World  & World \\
+    Spatial resolution & 30\,min & station & 1\,km & varies & 0.1$^\circ$ & 30\,sec \\
+    Climate periods          & 1 & 1 & 1 & \xmark & \cmark & 5 \\
+    Weather periods          & \xmark & \xmark & \cmark & \cmark & \cmark & 1951--2024 \\
+    Source data              & Stations & Stations & ERA5T & Satellite & ERA5 & WorldClim \\
     \bottomrule
   \end{tabular}
   \normalsize
-\end{table}
+\end{sidewaystable}
 
 % * ─── 2.2 WorldClim ────────────────────────────────────────────────────────────
 
