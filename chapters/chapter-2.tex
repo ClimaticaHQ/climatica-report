@@ -1,28 +1,34 @@
-% ─── CHAPTER 2 ────────────────────────────────────────────────────────────────
 \chapter{Related Work}\label{REL}
 
 This chapter surveys the landscape in which Climatica was developed.
 Section~\ref{REL_APPS} reviews existing climate data applications and identifies
 the gap that Climatica addresses. Section~\ref{REL_WORLDCLIM} describes the
 WorldClim dataset and the Virtual Semantic API on which the application depends.
-Section~\ref{REL_WIKIDATA} explains the role of Wikidata as a geographical
-knowledge base. Section~\ref{REL_SEMWEB} introduces the Semantic Web concepts
-that underlie the API design. Section~\ref{REL_WL} describes the Walter-Lieth
-climatogram.
+Section~\ref{REL_SEMWEB} introduces the Semantic Web and Linked Data concepts
+that underlie the API design. Section~\ref{REL_GEONAMES} describes GeoNames and
+the Apache Solr search engine used for city search. Section~\ref{REL_WIKIDATA}
+explains the role of Wikidata as a geographical knowledge base for reverse
+geocoding. Section~\ref{REL_WL} describes the Walter-Lieth climatogram.
 
-\section{Existing Climate Data Applications}\label{REL_APPS}
+% * ─── 2.1 Existing Climate Data Applications ───────────────────────────────────
+\section{A Survey of Climate Data Applications}\label{REL_APPS}
 
-A number of web tools already offer access to climate and weather data. This
-section reviews the most relevant ones, focusing on their intended audience,
-the data sources they expose, and the interaction model they provide.
+A number of web applications already offer access to climate and weather data.
+The tools reviewed in this section were identified through web searches and
+Google Scholar queries using terms such as \emph{climate data visualisation},
+\emph{interactive climatogram}, and \emph{weather data explorer}. The selection
+covers the most widely used publicly accessible tools that overlap with
+Climatica's objectives, focusing on their intended audience, the data sources
+they expose, and the interaction model they provide.
 
-\subsection{Climate-Charts.net}\label{REL_APPS_CLIMATECHARTS}
+\subsection{ClimateCharts.net}\label{REL_APPS_CLIMATECHARTS}
 
-Climate-Charts.net~\cite{climatecharts} is a browser-based tool that generates
-Walter-Lieth climatograms for locations around the world. The user types a city
-name, selects from a list of meteorological stations, and receives a climatogram
-together with basic monthly statistics. The interface is clean and the output is
-immediately recognisable to anyone familiar with classical climate classification.
+ClimateCharts.net~\cite{climatecharts} is a browser-based tool that generates
+Walter-Lieth climatograms for locations around the world. The user clicks a
+point on an interactive map to select the nearest meteorological station, and
+receives a climatogram together with basic monthly statistics. The interface is
+clean and the output is immediately recognisable to anyone familiar with
+classical climate classification.
 
 The tool's main strength is its simplicity: a first-time user can obtain a
 climatogram within seconds, with no registration or configuration required.
@@ -30,7 +36,7 @@ The chart is well-styled and the colour scheme adheres closely to the
 traditional Walter-Lieth convention, making it easy to identify arid and humid
 periods at a glance.
 
-However, Climate-Charts.net is limited to a single view per location. There is
+However, ClimateCharts.net is limited to a single view per location. There is
 no mechanism for comparing two cities side by side, exploring how a location's
 climate has changed across historical periods, or visualising the spatial
 distribution of a climate variable across a region. Data are sourced from
@@ -40,25 +46,21 @@ basin are poorly represented. The spatial resolution is inherently point-based
 rather than raster-based, so interpolation between stations introduces
 uncertainty in areas far from observation networks.
 
-\begin{figure}[H]
+The interface of ClimateCharts.net is shown in Figure~\ref{fig:screenshot_climatecharts}.
+\begin{figure}[t]
   \centering
   \subfigure[Map interface: the user clicks a location to select the nearest
-    climate cell.]{
+  climate cell.]{
     \includegraphics[width=0.9\textwidth]{Images/climatecharts-map.png}
   }
   \subfigure[Resulting Walter-Lieth climatogram with monthly data table.]{
     \includegraphics[width=0.9\textwidth]{Images/climatecharts-chart.png}
   }
-  \caption{Climate-Charts.net interface. The tool produces clean Walter-Lieth
+  \caption{ClimateCharts.net interface. The tool produces clean Walter-Lieth
     climatograms but is limited to a single location view with no comparison or
-    temporal exploration features.}
+  temporal exploration features.}
   \label{fig:screenshot_climatecharts}
 \end{figure}
-
-Climatica draws direct inspiration from the climatogram concept used by this
-tool, but extends it with multi-city comparison, period comparison, and regional
-heatmap views, all backed by the kilometre-scale raster archive of WorldClim
-rather than sparse station data.
 
 \subsection{Climate-Data.org}\label{REL_APPS_CLIMATEDATA}
 
@@ -81,14 +83,18 @@ exploratory analysis. There is no way to ask questions such as ``how does the
 summer in Valladolid compare to that in Kyiv?'' or ``has the dry season in this
 city become longer over the past fifty years?''. The site does not expose a
 public API, so its data cannot be consumed programmatically by third-party
-applications.
+applications. Furthermore, the temporal coverage is limited to a single climate
+period (1991--2020), no Walter-Lieth climatogram is available, and the location
+database covers only a subset of populated places --- many smaller settlements
+are absent entirely.
 
-\begin{figure}[H]
+Figure~\ref{fig:screenshot_climatedata} shows a typical city page from the site.
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/climatedata.png}
   \caption{Climate-Data.org city page. The static climatogram and data tables
     are embedded among advertising and navigation elements, making the interface
-    feel cluttered for a user interested primarily in the chart.}
+  feel cluttered for a user interested primarily in the chart.}
   \label{fig:screenshot_climatedata}
 \end{figure}
 
@@ -102,14 +108,15 @@ cold nights, and wind speed on a single interactive chart. The platform is aimed
 at a broad audience ranging from casual users planning holidays to professionals
 in agriculture, aviation, and construction.
 
-Compared to Climate-Charts.net and Climate-Data.org, Meteoblue provides
+Compared to ClimateCharts.net and Climate-Data.org, Meteoblue provides
 considerably more information per view: a single chart may overlay five or more
 variables simultaneously, and the interface includes a Climate Comparison
 feature that allows two locations to be placed side by side. In this respect,
 Meteoblue overlaps with several of Climatica's objectives.
 
 However, there are meaningful differences in scope and data source. Meteoblue
-relies on ERA5T, a proprietary reanalysis model produced by ECMWF that combines
+relies on ERA5T~\cite{hersbach2020era5}, a reanalysis dataset produced by the
+European Centre for Medium-Range Weather Forecasts (ECMWF) that combines
 observational data with numerical weather modelling. This makes it well suited
 for recent weather reconstruction but less directly comparable with the
 station-interpolated WorldClim surfaces that Climatica uses. Furthermore, the
@@ -120,34 +127,18 @@ a different design choice: fewer variables per view, a cleaner visual hierarchy,
 and a focus on the Walter-Lieth convention that many geography students and
 educators already know.
 
-\begin{figure}[H]
+Figure~\ref{fig:screenshot_meteoblue} shows the History and Climate module
+for Valladolid.
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/meteoblue.png}
   \caption{Meteoblue History and Climate module for Valladolid. The chart
     overlays five climate variables simultaneously and is backed by the ERA5T
-    reanalysis model. The platform offers more data per view than
-    Climate-Charts.net but targets a different audience and data source than
+    reanalysis dataset. The platform offers more data per view than
+    ClimateCharts.net but targets a different audience and data source than
     Climatica.}
   \label{fig:screenshot_meteoblue}
 \end{figure}
-
-\subsection{Köppen-Geiger Climate Classification Maps}\label{REL_APPS_KOPPEN}
-
-Several web tools visualise the Köppen-Geiger climate classification system,
-which partitions the Earth's surface into climate zones based on long-term
-temperature and precipitation thresholds~\cite{koppen}. These tools typically
-render a world map with colour-coded zones and allow the user to click on a
-location to read its classification. The most widely used online version is
-based on the updated global map by Beck et al.~\cite{beck2018koppen}, which
-uses the WorldClim dataset as its primary data source.
-
-While geographically comprehensive and visually compelling, Köppen-Geiger
-viewers are essentially static: they communicate a single derived variable (the
-climate class) and offer no access to the underlying monthly values from which
-that class was computed. A user can learn that Valladolid has a \emph{BSk}
-(cold semi-arid) climate, but cannot inspect the monthly temperature curve or
-compare the precipitation totals of different years. They are closer to
-reference posters than to data exploration tools.
 
 \subsection{NASA Giovanni}\label{REL_APPS_GIOVANNI}
 
@@ -178,25 +169,25 @@ city on a map and immediately see its climate profile. The platform is powerful
 but has a steep learning curve that puts it out of reach for non-specialist
 users.
 
-\begin{figure}[H]
+The NASA Giovanni interface is shown in Figure~\ref{fig:screenshot_giovanni}.
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/giovanni.png}
   \caption{NASA Giovanni main interface. Before any data can be retrieved, the
     user must select a plot type, specify a date range, a bounding box, and
     choose from a catalogue of 2{,}048 variables grouped by discipline. The
     empty results panel illustrates why the platform is inaccessible to
-    non-specialist users.}
+  non-specialist users.}
   \label{fig:screenshot_giovanni}
 \end{figure}
 
 \subsection{Copernicus Climate Change Service}\label{REL_APPS_COPERNICUS}
 
 The Copernicus Climate Change Service (C3S)~\cite{copernicus}, operated by the
-European Centre for Medium-Range Weather Forecasts (ECMWF) on behalf of the
-European Commission, is the most comprehensive open climate data infrastructure
-currently available. Its Climate Data Store (CDS) provides access to terabytes
-of reanalysis data (ERA5), seasonal forecasts, climate projections, and sectoral
-climate indicators, all under an open licence.
+ECMWF on behalf of the European Commission, is the most comprehensive open climate 
+data infrastructure currently available. Its Climate Data Store (CDS) provides 
+access to terabytes of reanalysis data (ERA5), seasonal forecasts, climate projections, 
+and sectoral climate indicators, all under an open licence.
 
 The CDS toolbox allows users to write Python scripts that retrieve, process, and
 visualise data from the store, and a graphical interface is provided for simpler
@@ -211,21 +202,23 @@ registration, understanding the CDS API, and familiarity with NetCDF file
 formats and Python data science libraries. The graphical interface, while
 improving, remains complex and slow for simple queries such as ``what is the
 typical July temperature in Seville?''. Furthermore, C3S data are reanalysis
-products derived from a combination of observations and numerical weather models,
+products derived from a combination of observations and numerical
+weather models,
 not the station-interpolated surfaces of WorldClim, so they are suited to
 different use cases.
 
-\begin{figure}[H]
+Figure~\ref{fig:screenshot_copernicus} shows the Copernicus Climate Data Store landing page.
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/copernicus.png}
   \caption{Copernicus Climate Data Store landing page. The search-first
     interface and the \emph{Login~/ Register} button in the top-right corner
     illustrate that meaningful access requires both registration and prior
-    knowledge of what datasets are available.}
+  knowledge of what datasets are available.}
   \label{fig:screenshot_copernicus}
 \end{figure}
 
-\subsection{Summary and Positioning of Climatica}\label{REL_APPS_SUMMARY}
+\subsection{Summary and Opportunity Gap for Climatica}\label{REL_APPS_SUMMARY}
 
 Table~\ref{tab:tools} summarises the capabilities of the tools reviewed above
 alongside Climatica. The comparison highlights that no existing tool combines
@@ -235,44 +228,47 @@ period-based trend exploration, and a regional spatial heatmap.
 
 The two most powerful platforms --- NASA Giovanni and Copernicus C3S --- offer
 far greater scientific depth than Climatica, but at the cost of a steep learning
-curve that excludes non-specialist users. The simpler tools --- Climate-Charts.net
+curve that excludes non-specialist users. The simpler tools ---
+Climate-Charts.net
 and Climate-Data.org --- are accessible but static, offering a single view with
 no comparative or temporal dimension. Meteoblue occupies a middle ground but
-relies on proprietary data and targets professional users. Climatica is the only
-tool in this survey that combines ease of use with interactive multi-view
+relies on proprietary data and targets professional users. Climatica would be 
+the only tool in this survey that combines ease of use with interactive multi-view
 exploration of open, globally consistent raster data.
 
-% --- Climatica screenshots split into two figures to fit the page ---
-\begin{figure}[H]
+Figures~\ref{fig:screenshot_climatica_a} and~\ref{fig:screenshot_climatica_b}
+show the City Climate page of Climatica for Valladolid, illustrating the map
+view, standard climograph, and Walter-Lieth climatogram.
+\begin{figure}[t]
   \centering
   \subfigure[Map view with location pin, raster cell outline, and summary stat
-    cards.]{
+  cards.]{
     \includegraphics[width=0.9\textwidth]{Images/climatica-map.png}
   }
   \subfigure[Standard climograph: precipitation bars (blue/yellow) and
-    temperature lines for the selected city.]{
+  temperature lines for the selected city.]{
     \includegraphics[width=0.9\textwidth]{Images/climatica-columns-graph.png}
   }
   \caption{Climatica City Climate page for Valladolid (weather dataset, year
-    1991) --- map and standard climograph views.}
+  1991) --- map and standard climograph views.}
   \label{fig:screenshot_climatica_a}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[t]
   \centering
   \includegraphics[width=0.9\textwidth]{Images/climatica-walter-lieth.png}
   \caption{Climatica City Climate page --- Walter-Lieth climatogram for the
     same city and period. Yellow areas indicate arid months (summer); blue areas
     indicate humid months (winter and spring). The chart uses SVG
     \texttt{clipPath} with the even-odd winding rule to produce exact arid/humid
-    fills without computing curve intersection points explicitly.}
+  fills without computing curve intersection points explicitly.}
   \label{fig:screenshot_climatica_b}
 \end{figure}
 
 \begin{table}[H]
   \centering
   \caption{Comparison of climate data tools.
-           \cmark~=~supported, \pmark~=~partial, \xmark~=~not supported.}
+  \cmark~=~supported, \pmark~=~partial, \xmark~=~not supported.}
   \label{tab:tools}
   \small
   \begin{tabular}{lcccccc}
@@ -285,18 +281,28 @@ exploration of open, globally consistent raster data.
     \textbf{\shortstack{Copernicus\\C3S}} &
     \textbf{Climatica} \\
     \midrule
-    City climate profile      & \cmark & \cmark & \cmark  & \xmark & \xmark & \cmark \\
-    Walter-Lieth climatogram  & \cmark & \cmark & \xmark  & \xmark & \xmark & \cmark \\
-    Multi-city comparison     & \xmark & \xmark & \pmark  & \xmark & \xmark & \cmark \\
-    Period trend comparison   & \xmark & \xmark & \pmark  & \cmark & \cmark & \cmark \\
-    Regional spatial heatmap  & \xmark & \xmark & \xmark  & \cmark & \cmark & \cmark \\
-    Open km-scale data        & \xmark & \xmark & \xmark  & \cmark & \cmark & \cmark \\
-    No registration required  & \cmark & \cmark & \pmark  & \xmark & \xmark & \cmark \\
-    Non-specialist audience   & \cmark & \cmark & \xmark  & \xmark & \xmark & \cmark \\
+    City climate profile      & \cmark & \cmark & \cmark  & \xmark &
+    \xmark & \cmark \\
+    Walter-Lieth climatogram  & \cmark & \cmark & \xmark  & \xmark &
+    \xmark & \cmark \\
+    Multi-city comparison     & \xmark & \xmark & \pmark  & \xmark &
+    \xmark & \cmark \\
+    Period trend comparison   & \xmark & \xmark & \pmark  & \cmark &
+    \cmark & \cmark \\
+    Regional spatial heatmap  & \xmark & \xmark & \xmark  & \cmark &
+    \cmark & \cmark \\
+    Open km-scale data        & \xmark & \xmark & \xmark  & \cmark &
+    \cmark & \cmark \\
+    No registration required  & \cmark & \cmark & \pmark  & \xmark &
+    \xmark & \cmark \\
+    Non-specialist audience   & \cmark & \cmark & \xmark  & \xmark &
+    \xmark & \cmark \\
     \bottomrule
   \end{tabular}
   \normalsize
 \end{table}
+
+% * ─── 2.2 WorldClim ────────────────────────────────────────────────────────────
 
 \section{WorldClim}\label{REL_WORLDCLIM}
 
@@ -311,7 +317,8 @@ at four spatial resolutions: 10 arc-minutes ($\approx$18.5\,km at the equator),
 5 arc-minutes ($\approx$9.2\,km), 2.5 arc-minutes ($\approx$4.6\,km), and 30
 arc-seconds ($\approx$900\,m).
 
-Seven monthly variables are available in the climate dataset: minimum temperature
+Seven monthly variables are available in the climate dataset: minimum
+temperature
 (\texttt{tmin}), maximum temperature (\texttt{tmax}), average temperature
 (\texttt{tavg}), precipitation (\texttt{prec}), solar radiation (\texttt{srad}),
 wind speed (\texttt{wind}), and vapour pressure (\texttt{vapr}). Climatica uses
@@ -397,7 +404,8 @@ uncertainty is higher. This limitation is inherent to any station-based
 interpolation product and is shared by all tools that use WorldClim as their
 data source, including Climatica.
 
-\subsubsection{Historical Weather Data and Climate Normals}\label{REL_WORLDCLIM_PERIODS}
+\subsubsection{Historical Weather Data and Climate
+Normals}\label{REL_WORLDCLIM_PERIODS}
 
 Alongside the baseline climate data, WorldClim also distributes historical
 monthly weather data for the period 1951--2024, prepared from the CRU-TS-4.09
@@ -515,97 +523,19 @@ page to summarise data across a user-drawn region.
 
 \subsubsection{Usage in Climatica}\label{REL_WORLDCLIM_API_USAGE}
 
-Climatica calls SCRAPI directly from the browser. The typical flow for the City
-Climate page is as follows: the application first resolves the selected city's
-coordinates (obtained from Wikidata) to a cell IRI via \texttt{cellofpoint}; it
-then calls \texttt{pixelvaluesofapoint} with the desired grid, variable set
+Climatica calls SCRAPI through server-side route handlers. The typical flow for
+the City Climate page is as follows: the application first resolves the selected
+city's coordinates to a cell IRI via \texttt{cellofpoint}; it then calls
+\texttt{pixelvaluesofapoint} with the desired grid, variable set
 (\texttt{tmin}, \texttt{tmax}, \texttt{tavg}, \texttt{prec}), and climate period
 to retrieve all twelve monthly values in a single request. The Period Comparison
-page issues five such requests in parallel --- one per climate period --- and
-overlays the results. The Heatmap page uses \texttt{pixelvaluesinbox} with the
-user-drawn bounding box, parsing pixel IRIs to reconstruct the geographic bounds
+page issues multiple such requests in parallel and overlays the results. The
+Heatmap page uses \texttt{pixelvaluesinbox} or \texttt{pixelsinpolygonGEO} with
+the user-drawn selection, parsing pixel IRIs to reconstruct the
+geographic bounds
 of each tile and colour-coding each cell according to its value.
 
-\section{Wikidata}\label{REL_WIKIDATA}
-
-\subsection{Overview}\label{REL_WIKIDATA_OVERVIEW}
-
-Wikidata~\cite{wikidata} is a free, collaboratively edited knowledge base
-maintained by the Wikimedia Foundation. It stores structured data as
-subject--predicate--object statements, where subjects and objects are identified
-by Q-identifiers (e.g.\ \texttt{Q2807} for Madrid) and predicates by
-P-identifiers (e.g.\ \texttt{P625} for coordinate location). As of 2025,
-Wikidata contains over 100 million items covering people, places, organisations,
-works, and more, in hundreds of languages.
-
-For geographical applications, Wikidata is particularly valuable because it
-provides multilingual labels for nearly every inhabited place on Earth, together
-with coordinates, administrative hierarchies, population figures, and ontological
-classifications. Its open licence (CC0) and its stable HTTP IRIs make it an
-attractive foundation for web applications that need to resolve city names to
-coordinates without relying on proprietary geocoding services.
-
-\subsection{Access Methods}\label{REL_WIKIDATA_ACCESS}
-
-Wikidata exposes its data through several complementary interfaces:
-
-\begin{itemize}
-  \item \textbf{Wikidata API (\texttt{action=wbsearchentities}).} A full-text
-    search endpoint that accepts a string query and a language code and returns
-    a ranked list of matching entities with their labels, descriptions, and
-    Q-identifiers. Results are not filtered by entity type.
-
-  \item \textbf{Wikidata API (\texttt{action=wbgetentities}).} Fetches the full
-    structured representation of one or more entities by Q-identifier, including
-    all statements and multilingual labels.
-
-  \item \textbf{GeoSearch (\texttt{list=geosearch}).} Returns Wikidata entities
-    whose coordinate location falls within a specified radius of a given
-    latitude/longitude point. Used for reverse geocoding.
-
-  \item \textbf{SPARQL endpoint (\texttt{query.wikidata.org/sparql}).} A full
-    SPARQL~1.1 interface over the complete Wikidata graph, supporting complex
-    graph traversal and filtering queries.
-\end{itemize}
-
-\subsection{Usage in Climatica}\label{REL_WIKIDATA_USAGE}
-
-Climatica relies on Wikidata for two distinct tasks: city search and reverse
-geocoding.
-
-\textbf{City search.} When a user types in the search bar, the application calls
-\texttt{wbsearchentities} with the query string and the active locale, retrieving
-up to 100 candidate entities. Because this endpoint returns all matching items
-regardless of type --- including districts, provinces, rivers, and historical
-regions --- a second request is immediately issued to the SPARQL endpoint. The
-query filters candidates to those that are instances of human settlement
-(\texttt{wdt:P31/wdt:P279* wd:Q486972}), which traverses the subclass hierarchy
-to include cities, towns, villages, and hamlets. The SPARQL response also returns
-the number of sitelinks (connections to Wikipedia articles in different languages)
-and the total statement count for each entity. These figures are used to compute
-a popularity score:
-\[
-  \text{score} = 3 \times \text{sitelinks} + \text{statements}
-\]
-Exact name matches receive a bonus of $+10{,}000$ to ensure they rank first.
-Entities whose description contains terms such as \emph{district},
-\emph{neighbourhood}, \emph{province}, or \emph{region} are excluded as a
-post-filter to remove administrative units that pass the ontological check but
-are not cities in the everyday sense. The final ranked list is capped at ten
-results.
-
-\textbf{Reverse geocoding.} When the user clicks a point on the map or activates
-the ``use my location'' button, the application calls the GeoSearch endpoint with
-the clicked coordinates and a 10\,km search radius. The returned entity
-identifiers are passed to \texttt{wbgetentities} to fetch labels and descriptions
-in the active locale. The first valid result is displayed as the city name in the
-interface.
-
-In both workflows the language used for labels is taken from the active i18n
-locale. Switching the interface language to Spanish or Ukrainian causes subsequent
-Wikidata calls to return city names in that language, making the multilingual
-support of the application seamless and consistent.
-
+% * ─── 2.3 Semantic Web and Linked Data ─────────────────────────────────────────
 \section{Semantic Web and Linked Data}\label{REL_SEMWEB}
 
 \subsection{The Resource Description Framework}\label{REL_SEMWEB_RDF}
@@ -653,7 +583,8 @@ triple patterns with variables in place of some IRIs or literals. The query
 engine searches the RDF graph for all assignments of values to variables that
 make every triple pattern true, and returns the results as a table.
 
-A simple illustrative query against the Wikidata graph might ask for all entities
+A simple illustrative query against the Wikidata graph might ask for
+all entities
 that are instances of \emph{human settlement}:
 
 \begin{lstlisting}[language=SPARQL, caption={A basic SPARQL query over Wikidata.},
@@ -670,13 +601,8 @@ The path expression \texttt{wdt:P31/wdt:P279*} means: follow the \emph{instance
 of} predicate once, then follow \emph{subclass of} zero or more times. This
 single expression traverses the entire class hierarchy beneath \emph{human
 settlement} (Q486972), matching cities, towns, villages, hamlets, and any other
-subclass --- something that would require a recursive common-table expression in
-SQL.
-
-Climatica uses exactly this path expression to filter the 100 candidates returned
-by \texttt{wbsearchentities} down to genuine human settlements, discarding
-rivers, mountains, administrative regions, and other non-city entities that
-happen to share a name with a city the user might be searching for.
+subclass. Climatica uses this pattern for reverse geocoding via Wikidata, as
+described in Section~\ref{REL_WIKIDATA}.
 
 \subsection{IRIs and the Linked Data Principles}\label{REL_SEMWEB_LD}
 
@@ -696,7 +622,8 @@ The structure of this IRI is not arbitrary: it encodes the grid resolution
 variable (\texttt{prec}), and the time period (\texttt{w1953}). Climatica
 exploits this encoding in its heatmap engine: rather than making a separate API
 call to retrieve the geographic bounds of each pixel, the application parses the
-IRI directly to reconstruct the row and column indices, computes the bounding box
+IRI directly to reconstruct the row and column indices, computes the
+bounding box
 from the known cell dimensions of the grid, and draws the heatmap tile without
 any additional network requests.
 
@@ -716,12 +643,101 @@ used in the WorldClim data model. Climatica does not use this ontology directly
 at runtime, but it provides the vocabulary that makes the IRI structure
 meaningful and stable.
 
+% * ─── 2.4 GeoNames and City Search ─────────────────────────────────────────────
+\section{GeoNames and City Search}\label{REL_GEONAMES}
+
+\subsection{The GeoNames Dataset}\label{REL_GEONAMES_DATA}
+
+GeoNames~\cite{geonames} is a free geographical database covering over
+11~million place names worldwide, available under a Creative Commons Attribution
+licence. Its primary distribution file, \texttt{allCountries.txt}, contains over
+12~million records of populated places, administrative regions,
+natural features,
+and points of interest, each annotated with coordinates, feature class, country
+code, population, and elevation. A companion file,
+\texttt{alternateNamesV2.txt}, provides localised names for each record in
+hundreds of languages, making GeoNames the most comprehensive open multilingual
+gazetteer available.
+
+For the purpose of city search, Climatica filters the full dataset to populated
+places only (GeoNames feature class \texttt{P}, covering settlement codes
+\texttt{PPL}, \texttt{PPLA}, \texttt{PPLA2}--\texttt{PPLA5}, and \texttt{PPLC}).
+A Python preprocessing script merges the two source files, extracts the English,
+Spanish, and Ukrainian preferred names for each record, and writes a compact
+\texttt{cities.csv} file used for indexing.
+
+\subsection{Apache Solr and Full-Text Search}\label{REL_GEONAMES_SOLR}
+
+Apache Solr~\cite{apache_solr} is an open-source enterprise search platform
+built on Apache Lucene. It provides a REST API for indexing and querying
+documents, with support for rich text analysis pipelines, faceted search, and
+geospatial filtering. Solr was chosen for Climatica's city search over
+alternatives such as PostgreSQL full-text search or Elasticsearch because of
+its mature support for custom tokenisation via \texttt{solrconfig.xml} and its
+low memory footprint when running alongside the application on the university
+server.
+
+The key feature exploited in Climatica is \textbf{trigram tokenisation}. A
+trigram analyser breaks each indexed name into overlapping three-character
+substrings: the name \texttt{Valladolid} produces tokens such as
+\texttt{val}, \texttt{all}, \texttt{lla}, \texttt{lad}, and so on. At query
+time the same analyser is applied to the user's input, so a query of
+\texttt{``val''} matches \texttt{Valladolid} without requiring the user to type
+a complete prefix. This enables fast, tolerant partial-word matching across all
+12~million indexed city names in three languages simultaneously.
+
+\subsection{Why GeoNames and Solr Instead of Wikidata}\label{REL_GEONAMES_WHY}
+
+The initial version of Climatica used Wikidata for city search via a two-step
+pipeline: a \texttt{wbsearchentities} call followed by a SPARQL filter query
+(Section~\ref{REL_WIKIDATA}). This approach required no local infrastructure
+but introduced two limitations that became significant under interactive use.
+First, Wikidata applies soft-throttling to high-frequency queries from a single
+origin, causing intermittent failures under rapid typing. Second, the ranking of
+results depended entirely on Wikidata's internal scoring, with no way to tune
+relevance or promote more populous cities without modifying the SPARQL query.
+
+Replacing Wikidata city search with a locally hosted Solr index eliminates both
+limitations: queries are served from infrastructure under full control, and the
+ranking function can be tuned freely --- for example, by boosting the
+\texttt{population} field so that Paris always ranks above smaller cities named
+Paris. The GeoNames dataset provides broader and more consistent coverage than
+Wikidata for small settlements, particularly in non-European regions.
+
+% * ─── 2.5 Wikidata ─────────────────────────────────────────────────────────────
+\section{Wikidata}\label{REL_WIKIDATA}
+
+Wikidata~\cite{wikidata} is a free, collaboratively edited knowledge base
+maintained by the Wikimedia Foundation. It stores structured data as
+subject--predicate--object statements following Linked Data principles, with
+subjects and objects identified by stable HTTP IRIs (Q-identifiers such as
+\texttt{Q2807} for Madrid) and predicates by P-identifiers. As of 2025,
+Wikidata contains over 100 million items in hundreds of languages.
+
+In the current version of Climatica, Wikidata is used exclusively for
+\textbf{reverse geocoding}: resolving a latitude/longitude pair to a named city.
+This operation is triggered when the user clicks a point on the map or activates
+the ``use my location'' button. The application calls the Wikidata GeoSearch
+endpoint (\texttt{list=geosearch}) with the clicked coordinates and a 10\,km
+search radius, then fetches the label of the nearest result in the active locale
+via \texttt{action=wbgetentities}. Because reverse geocoding is a low-frequency,
+point-in-time operation, the soft-throttling constraints that made Wikidata
+unsuitable for interactive text search (Section~\ref{REL_GEONAMES_WHY}) do not
+apply here.
+
+Wikidata's multilingual labels --- available for nearly every inhabited place on
+Earth --- make it well suited for this role: switching the interface language to
+Spanish or Ukrainian causes the returned city name to appear in that language
+automatically, without any additional lookup.
+
+% * ─── 2.6 Walter-Lieth Climatograms ────────────────────────────────────────────
 \section{Walter-Lieth Climatograms}\label{REL_WL}
 
 \subsection{Origin and Purpose}\label{REL_WL_ORIGIN}
 
 The Walter-Lieth climatogram is a standardised graphical method for depicting
-the seasonal climate of a location, developed by Heinrich Walter and Helmut Lieth
+the seasonal climate of a location, developed by Heinrich Walter and
+Helmut Lieth
 in the 1960s~\cite{walter1960}. It remains one of the most widely used tools in
 biogeography, ecology, and physical geography for comparing the climate of
 different sites at a glance, because it compresses twelve months of temperature
@@ -737,11 +753,12 @@ months of the year:
     monthly precipitation in millimetres on the right axis.
 \end{itemize}
 
-This is in contrast to the \emph{standard climograph} (also called a
-climatic bar chart), which represents the same variables using vertical bars
-for precipitation and a smooth temperature line. The Walter-Lieth diagram
-omits the bars entirely and instead uses filled areas between the two curves
-to communicate the water balance of the location directly.
+This is in contrast to the \emph{standard climograph} (also called a climatic
+bar chart), which represents the same variables using vertical bars for
+precipitation and a smooth temperature line. The Walter-Lieth diagram omits the
+bars entirely and instead uses filled areas between the two curves to
+communicate
+the water balance of the location directly.
 
 The defining feature of the Walter-Lieth diagram is the \textbf{scaling rule}:
 the precipitation axis is set to exactly twice the temperature axis. That is,
@@ -762,8 +779,10 @@ The coloured areas between the two curves are the primary information carriers:
     --- are shown in a warm colour (typically yellow or orange). They indicate
     that the site receives less rainfall than it would need to sustain lush
     vegetation.
-  \item \textbf{Humid periods} --- months where precipitation / 2 $>$ temperature
-    --- are shown in a cool colour (typically blue). They indicate surplus water.
+  \item \textbf{Humid periods} --- months where precipitation / 2 $>$
+    temperature
+    --- are shown in a cool colour (typically blue). They indicate
+    surplus water.
 \end{itemize}
 
 A Mediterranean climate, for example, produces a large arid area in summer and
@@ -794,15 +813,18 @@ region from the precipitation curve down to the baseline) are defined as closed
 SVG paths. A single \texttt{clipPath} is constructed by concatenating these two
 paths. Because the even-odd rule colours a point only if it is enclosed by an
 \emph{odd} number of the component paths, the intersection of the two areas ---
-where both paths overlap --- is automatically excluded. Each fill is then painted
-using this clip, producing exactly the correct colouring with no artefacts and no
+where both paths overlap --- is automatically excluded. Each fill is
+then painted
+using this clip, producing exactly the correct colouring with no
+artefacts and no
 need to compute crossing points explicitly.
 
-The temperature and precipitation curves themselves are rendered using Catmull-Rom
+The temperature and precipitation curves themselves are rendered
+using Catmull-Rom
 spline interpolation rather than straight line segments, which produces the
 smooth, organic appearance characteristic of traditional Walter-Lieth diagrams.
-The month labels are localised through the i18next library, so the diagram is
-fully multilingual without any changes to the rendering logic.
+The month labels are localised through the \texttt{next-intl} library, so the
+diagram is fully multilingual without any changes to the rendering logic.
 
 The aridity condition is computed per month as:
 \[
