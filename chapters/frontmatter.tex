@@ -6,23 +6,22 @@ non-specialist users. Existing tools either require GIS expertise or offer only
 static visualisations with no ability to compare locations or time periods
 interactively.
 
-This report describes the design and implementation of \textbf{Climatica}, a
-web application developed during a 400-hour internship at the Universidad de
-Valladolid. Climatica provides interactive access to WorldClim historical
+This report describes the design and implementation of \textbf{Climatica}, a 
+web application developed as a Bachelor's thesis and internship at the 
+Universidad de Valladolid. Climatica provides interactive access to WorldClim historical
 climate data through four pages: a single-city climate profile with a
 Walter-Lieth climatogram, a side-by-side city comparison, a multi-period
-climate change explorer, and a regional heatmap renderer. City search is
-backed by a locally hosted Apache Solr index built from GeoNames data, and
-all external API calls are proxied through Next.js server-side route handlers
-with Redis caching.
+climate change explorer, and a regional heatmap renderer.
 
-The system was implemented using Next.js~16, React~19, TypeScript, Leaflet,
-and Recharts, and is delivered in three locales (English, Spanish, and
-Ukrainian). Key technical contributions include a client-side Walter-Lieth
-diagram built from scratch with SVG \texttt{clipPath} masking, a raster
-heatmap engine that parses WorldClim pixel IRIs to reconstruct geographic
-tile bounds, and a trigram-based city search pipeline backed by a GeoNames
-index of over 12~million populated places.
+The application is delivered in three languages (English, Spanish, and
+Ukrainian) and requires no registration or local software installation.
+Key capabilities include an interactive Walter-Lieth climatogram with
+correct arid and humid period shading, a spatially resolved regional
+heatmap rendered directly from WorldClim raster pixels, and a fast
+multilingual city search covering over 12~million populated places
+worldwide. All climate data queries are proxied server-side, keeping
+authentication credentials off the client and enabling response caching
+for repeated requests.
 
 \vspace{0.5cm}
 \noindent\textbf{Keywords:} \palabrasClave
