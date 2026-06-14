@@ -3,87 +3,103 @@
 
 \section{Motivation and Background}\label{INTRO_MOT}
 
-Climate change is one of the defining challenges of the twenty-first century.
-Understanding historical climate patterns --- temperature trends, precipitation
-cycles, and the differences between regions --- is an essential first step for
-researchers, educators, policymakers, and the general public alike. Yet access
-to high-quality climate data remains, in practice, restricted to those with
-specialist GIS or programming skills. Datasets such as
-WorldClim~\cite{fick2017worldclim} provide kilometre-scale rasters of monthly
-temperature and precipitation going back to 1960, but querying them
-traditionally requires desktop software, custom scripts, or academic
-subscriptions.
+Climate change is one of the defining challenges of the twenty-first
+century~\cite{unesco_sdgs}. Understanding historical climate patterns ---
+temperature trends, precipitation cycles, and the differences between regions
+--- is an essential first step for researchers, educators, policymakers, and
+the general public alike. Yet access to high-quality climate data remains, in
+practice, restricted to those with specialist GIS or programming skills.
+WorldClim~\cite{fick2017worldclim} is a globally comprehensive open dataset
+that provides monthly climate and meteorological rasters spanning the period
+1951--2024, covering variables such as temperature, precipitation, solar
+radiation, and wind speed at resolutions down to 30 arc-seconds
+($\approx$900\,m). Despite this richness, querying WorldClim traditionally
+requires desktop GIS software, custom scripts, or academic subscriptions ---
+placing it out of reach for the majority of potential users.
 
 At the same time, the web platform has matured to the point where rich,
 interactive data exploration can be delivered entirely in the browser, with no
 installation and no registration. Modern JavaScript frameworks, vector-tile
 mapping libraries, and reactive data-fetching primitives make it possible to
 build tools that would previously have required a dedicated server-side
-pipeline. The WorldClim group at the Universidad de Valladolid has developed a
+pipeline. The GSIC research group at the Universidad de Valladolid has developed a
 Virtual Semantic API~\cite{scrapi} that exposes its raster archive as a
 SPARQL-compatible REST service, opening the door to exactly this kind of
 lightweight, client-only integration.
 
-Despite these advances, no general-purpose, browser-based tool exists that
-allows a non-specialist user to look up a city by name, inspect its monthly
-climate profile, compare it to another city, explore how its climate has shifted
-across historical periods, or visualise the spatial distribution of a climate
-variable across an entire region --- all within a single, cohesive interface.
-Climatica was designed to fill that gap.
+Despite these advances, existing web tools that offer climate data fall short
+in several important ways. Consider Climate-Charts.net~\cite{climatecharts} as
+a representative example: it covers only locations with nearby meteorological
+stations, meaning large parts of Africa, Central Asia, and the Amazon basin are
+poorly represented; it exposes raw station observations rather than
+spatially interpolated raster surfaces, so values between stations are
+unreliable; its temporal scope is limited to a single historical baseline; and
+it provides no mechanism for regional spatial analysis. Similar limitations
+affect the other tools surveyed in Chapter~\ref{REL}: narrow regional coverage,
+coarse or point-based resolution, restricted time periods, and a static
+single-location view with no comparative or temporal exploration.
+
+WorldClim avoids all of these problems --- it provides globally consistent,
+interpolated raster data at kilometre-scale resolution across seven decades ---
+but exposing such a complex, high-dimensional dataset through an accessible
+web interface is itself a significant challenge. No general-purpose,
+browser-based application currently allows a non-specialist user to look up a
+city by name, inspect its monthly climate profile, compare it to another city,
+explore how its climate has shifted across historical periods, and visualise the
+spatial distribution of a climate variable across an entire region --- all
+within a single, cohesive interface. In this Bachelor Thesis, I propose a web 
+application, named \textbf{Climatica}, to fill that gap.
 
 \section{Objectives}\label{INTRO_OBJ}
 
-The primary objective of this internship project was to design, implement, and
-evaluate a web application that makes WorldClim historical climate data
-accessible and explorable for non-specialist users, operating entirely in the
-browser without requiring registration, local software installation, or GIS
-expertise.
+The primary objective of this Bachelor Thesis is to design, implement, and
+evaluate a web application that makes the historical climatic and meteorological
+dataset of WorldClim accessible to non-specialist users, allowing them to
+freely choose which climate or meteorological raster to explore --- without
+requiring registration, local software installation, or GIS expertise.
 
-The specific objectives were as follows:
+The specific objectives are as follows:
 
 \begin{enumerate}
   \item \textbf{City climate profile.} Enable a user to search for any city in
     the world by name and view a complete monthly climate profile, including
     minimum temperature, maximum temperature, average temperature, and
-    precipitation, together with a Walter-Lieth climatogram for rapid climate
-    classification.
+    precipitation, together with a Walter-Lieth climatogram~\cite{walter1960} 
+    for rapid climate classification.
 
   \item \textbf{City comparison.} Allow side-by-side comparison of the climate
     profiles of two cities, with overlaid charts that make seasonal differences
     immediately visible.
 
-  \item \textbf{Period comparison.} Expose the five historical time periods
-    available in WorldClim (1960--1990, 1970--2000, 1980--2010, 1990--2020,
-    and the long-term baseline) so that a user can observe trends in a city's
-    climate across decades.
+  \item \textbf{Period comparison.} Allow the user to compare the climate of a
+    single city across time, using two distinct modes. In \emph{climate mode},
+    the user selects any two of the five available 30-year climate normals
+    (1951--1980, 1961--1990, 1970--2000, 1981--2010, and 1991--2020) and views
+    their monthly profiles overlaid on shared axes with trend indicator cards.
+    In \emph{weather mode}, the user selects up to five individual years from
+    the CRU-TS-4.09 weather archive (1951--2024) and compares them
+    simultaneously on a single chart.
 
-  \item \textbf{Regional heatmap.} Provide an interactive map on which the user
-    can draw a bounding box or polygon and view a spatially resolved heatmap of
-    any climate variable for any month, rendered directly from WorldClim raster
-    data.
-
-  \item \textbf{Front-end only architecture.} Implement the application as a
-    single-page application that communicates directly with the WorldClim
-    Virtual Semantic API and the Wikidata API, without developing a custom
-    back-end. An early design considered wrapping the WorldClim API in a
-    NestJS layer with a database and response caching, but this was set aside
-    in favour of delivering a fully functional front-end within the available
-    time.
+  \item \textbf{Web architecture.} Implement the application as a client-side
+    single-page application~\cite{react} that communicates directly with the
+    WorldClim Virtual Semantic API~\cite{scrapi} and the Wikidata~\cite{wikidata}
+    knowledge base for city search and geocoding, without developing a custom
+    back-end.
 
   \item \textbf{Internationalisation.} Deliver the interface in at least two
-    languages; the final implementation supports English, Spanish, and
-    Ukrainian.
+    languages, with city names displayed in the active language.
 \end{enumerate}
 
 \section{Methodology}\label{INTRO_MET}
 
 The project followed an iterative, prototype-driven development process
-organised into four broad phases.
+organised into four broad phases, consistent with established software
+engineering research methodology~\cite{adrion1993}.
 
 \textbf{Phase 1 --- Research and scoping.} The first two weeks were devoted to
 understanding the WorldClim Virtual Semantic API and the Wikidata knowledge
 graph, surveying existing climate visualisation tools (see
-Chapter~\ref{REL}), and agreeing the functional scope with the supervisor.
+Chapter~\ref{REL}), and agreeing the functional scope with the supervisors.
 User stories were collected and translated into a set of functional and
 non-functional requirements (Section~\ref{APP_REQ}).
 
@@ -92,13 +108,14 @@ requirements, the technology stack was chosen (Section~\ref{APP_TECH}) and
 the application architecture was defined (Section~\ref{APP_ARCH}). The key
 architectural decision --- to build a front-end-only application that calls
 the WorldClim and Wikidata APIs directly --- was validated against the
-WorldClim API documentation and confirmed with the supervisor.
+WorldClim API documentation and confirmed with the supervisors.
 
 \textbf{Phase 3 --- Iterative implementation.} The four application pages were
 implemented one at a time, starting with the City Climate page as it exercised
 the core API integration and chart rendering. Each page was demonstrated to the
-supervisor at fortnightly meetings, feedback was collected, and the next
-iteration began. This phase constituted the majority of the 400 working hours.
+supervisors and other researchers in the group during our meetings, feedbacks 
+was collected, and the next iteration began. This phase constituted the majority 
+of the 400 working hours.
 
 \textbf{Phase 4 --- Evaluation and documentation.} A usability evaluation was
 conducted with representative users (Section~\ref{EVAL}), the results were
