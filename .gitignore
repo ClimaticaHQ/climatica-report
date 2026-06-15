@@ -12,6 +12,8 @@
 *.fls
 *.fdb_latexmk
 
+main.bbl-SAVE-ERROR
+
 .DS_Store
 
 uva-eps-converted-to.pdf

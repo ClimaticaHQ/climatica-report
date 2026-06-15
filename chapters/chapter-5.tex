@@ -1,3 +1,259 @@
-% ─── CHAPTER 5 ────────────────────────────────────────────────────────────────
-\chapter{Conclusions and Future Work}\label{CONC}
-% TODO
+% * ─── CHAPTER 5 ────────────────────────────────────────────────────────────────
+\chapter{Conclusions}\label{CONC}
+
+This chapter summarises the work carried out during this Bachelor's thesis +
+internship project, reflects on whether the original objectives were met, and
+identifies directions for future development.
+
+% * ─── 5.1 Summary of Contributions ────────────────────────────────────────────
+\section{Summary of Contributions}\label{CONC_SUMMARY}
+
+This Bachelor's thesis describes the design, implementation, and evaluation of
+\textbf{Climatica}, a browser-based web application that makes the WorldClim
+historical climate and meteorological dataset accessible to non-specialist users
+without requiring GIS software, programming skills, or registration. The
+application is publicly available at \url{https://climatica.gsic.uva.es/}.
+
+The project addressed a clear gap in the landscape of existing climate data
+tools. As the survey in Chapter~\ref{REL} demonstrated, no publicly available
+tool combines ease of use, open kilometre-scale raster data, interactive
+multi-view exploration, and support for temporal trend analysis in a single
+registration-free browser interface. Climatica fills this gap by exposing the
+full WorldClim archive --- covering the period 1951--2024 across five 30-year
+climate normals and individual weather years --- through four complementary
+pages: a city climate profile with a Walter-Lieth climatogram, a side-by-side
+city comparison, a multi-period climate change explorer, and a regional heatmap
+renderer.
+
+The key technical contributions of the project are as follows:
+
+\begin{itemize}
+  \item \textbf{Full-stack Next.js architecture.} The original React SPA was
+    redesigned around Next.js~16 with server-side route handlers, moving all
+    SCRAPI authentication credentials off the client and enabling server-side
+    Redis caching. This architectural migration resolved the Wikidata
+    soft-throttling limitation that had made interactive city search unreliable
+    in the first version.
+
+  \item \textbf{GeoNames city search pipeline.} A Python preprocessing script
+    merges the GeoNames \texttt{allCountries.txt} and
+    \texttt{alternateNamesV2.txt} datasets into a compact \texttt{cities.csv}
+    index, which is imported into an Apache Solr~8 core with trigram
+    tokenisation. The resulting pipeline supports fast, tolerant partial-word
+    matching across 12~million populated places in English, Spanish, and
+    Ukrainian, with population-based result ranking that can be tuned without
+    modifying any external API.
+
+  \item \textbf{Walter-Lieth climatogram engine.} A custom SVG rendering
+    strategy using \texttt{clipPath} with the even-odd winding rule produces
+    pixel-perfect arid and humid area fills without computing spline
+    intersection points explicitly. Coordinate projection relies on
+    Recharts~v3 internal hooks to make the overlay fully responsive to window
+    resizing.
+
+  \item \textbf{WorldClim pixel IRI parsing.} The heatmap engine parses the
+    structured pixel IRIs returned by SCRAPI to reconstruct geographic tile
+    bounds directly, eliminating a round-trip API call per pixel and enabling
+    fast rendering of large regional selections.
+
+  \item \textbf{Quality assurance pipeline.} A two-stage GitHub Actions CI/CD
+    setup enforces TypeScript compilation, ESLint, Prettier, and unit test
+    coverage on every commit, followed by a separate Playwright end-to-end
+    suite that exercises the full request path including Redis and Solr.
+
+  \item \textbf{Internationalisation.} The interface is delivered in three
+    locales (English, Spanish, and Ukrainian) via \texttt{next-intl}, with
+    city names returned by the GeoNames index in the active language.
+\end{itemize}
+
+% * ─── 5.2 Assessment of Objectives ────────────────────────────────────────────
+\section{Assessment of Objectives}\label{CONC_OBJECTIVES}
+
+Section~\ref{INTRO_OBJ} defined six specific objectives for the project.
+Table~\ref{tab:objectives} assesses the degree to which each was achieved.
+
+\begin{table}[H]
+  \centering
+  \caption{Assessment of project objectives.}
+  \label{tab:objectives}
+  \small
+  \begin{tabular}{p{4cm}p{2cm}p{6.5cm}}
+    \toprule
+    \textbf{Objective} & \textbf{Status} & \textbf{Notes} \\
+    \midrule
+    WorldClim dataset access &
+      \cmark~Met &
+      All five climate normals and weather years 1951--2024 exposed through
+      four interactive pages \\
+    City climate profile &
+      \cmark~Met &
+      Standard climatogram and Walter-Lieth diagram implemented \\
+    City comparison &
+      \cmark~Met &
+      Side-by-side comparison with overlaid charts and insight cards \\
+    Period comparison &
+      \cmark~Met &
+      Climate mode (two normals) and weather mode (up to five years) \\
+    Web architecture &
+      \pmark~Revised &
+      Original client-side-only objective superseded by full-stack Next.js
+      architecture; rationale documented in Section~\ref{APP_ARCH_EVOLUTION} \\
+    Internationalisation &
+      \cmark~Met &
+      English, Spanish, and Ukrainian delivered via \texttt{next-intl} \\
+    \bottomrule
+  \end{tabular}
+  \normalsize
+\end{table}
+
+Five of the six objectives were fully met. The web architecture objective
+underwent a deliberate revision during development: the original plan to build
+a client-side-only single-page application was superseded by the need for
+secure API key handling and controllable city search ranking, which required
+a server-side component. This change was documented and justified in
+Section~\ref{APP_ARCH_EVOLUTION} and ultimately produced a more robust and
+maintainable architecture than the original design.
+
+% * ─── 5.3 Evaluation Results ──────────────────────────────────────────────────
+\section{Evaluation Results}\label{CONC_EVAL}
+
+The usability evaluation conducted on 3 June 2026 with 27 students from ten
+European universities produced encouraging results. The mean System Usability
+Scale (SUS) score of \textbf{84.6} places Climatica in the \emph{Excellent}
+range on the Bangor et al.\ adjective scale, well above the industry average
+of 68. The Net Promoter Score of \textbf{+44} indicates that promoters
+substantially outnumber detractors among the participant group.
+
+The qualitative feedback aligned with the quantitative results. Ease of use
+and intuitiveness were the most frequently mentioned positive attributes,
+cited unprompted by approximately 80\% of respondents --- precisely the
+audience for whom the application was designed. The two demo scenarios
+developed in collaboration with Prof.\ Dr.\ Felipe Bravo (Catedrático de
+Planificación Forestal, Universidad de Valladolid) demonstrated that Climatica
+can support real forest management workflows --- from updating a 30-year
+climate baseline for species selection to assembling evidence for climate-driven
+forest decline --- in under twenty minutes, using only a web browser.
+
+% * ─── 5.4 Lessons Learned ─────────────────────────────────────────────────────
+\section{Lessons Learned}\label{CONC_LESSONS}
+
+Several technical and methodological lessons emerged during the project.
+
+\textbf{Prototype early, migrate deliberately.} The initial React SPA prototype
+was essential for validating the SCRAPI integration and establishing the core
+user interaction model before any architectural decisions were locked in. The
+migration to Next.js was motivated by concrete, observable problems (Wikidata
+throttling, uncontrollable ranking) rather than speculative concerns, which made
+the decision easier to justify and the scope of the migration easier to bound.
+
+\textbf{External API constraints shape architecture.} The two most significant
+architectural decisions in the project --- moving city search from Wikidata to
+Solr and adding a server-side caching layer --- were both driven by limitations
+of external services rather than by internal design preferences. When building
+on top of third-party APIs, it is worth investing early in understanding their
+rate limits, ranking behaviour, and failure modes, as these constraints can
+force substantial rework if discovered late.
+
+\textbf{IRI structure as a performance optimisation.} The decision to parse
+WorldClim pixel IRIs directly to reconstruct tile bounds, rather than issuing
+a separate API call per pixel, eliminated a significant bottleneck in the
+heatmap rendering pipeline. This approach was only possible because SCRAPI
+follows the Linked Data principle of encoding resource properties in IRI
+structure --- a concrete benefit of the semantic web architecture that might
+not be immediately obvious to a developer approaching the API for the first time.
+
+\textbf{Usability testing with domain users.} The evaluation session with
+forestry and biology students highlighted issues --- particularly the manual
+filter application step and heatmap loading times under fine resolutions ---
+that were not apparent during development, when testing was performed by the
+developer who already knew the application's interaction model. Domain-expert
+users approach interfaces with different mental models, and their feedback
+provided actionable insight that would have been difficult to obtain through
+automated testing alone.
+
+% * ─── 5.5 Future Work ─────────────────────────────────────────────────────────
+\section{Future Work}\label{CONC_FUTURE}
+
+The evaluation and development experience identified several concrete directions
+for future work, which are summarised here and discussed in more detail in
+Section~\ref{EVAL_DISCUSS_FUTURE}.
+
+\textbf{Debounced filter workflow.} The most commonly requested usability
+improvement was automatic filter application without an explicit ``Apply''
+button. Redesigning the draft filter pattern to debounce API calls would
+address this without reintroducing the problem of mid-edit partial states
+triggering expensive requests.
+
+\textbf{Raw data download.} Several technically sophisticated respondents
+requested access to the underlying monthly pixel values. Adding a CSV or JSON
+export of the full SCRAPI response would satisfy this request and extend
+Climatica's utility to users who want to perform their own downstream analysis.
+
+\textbf{10-year climate normals.} The current five 30-year periods provide
+good coverage for long-term trend analysis, but several respondents requested
+finer temporal resolution. Adding 10-year normals and non-overlapping period
+ranges would significantly expand the analytical capability of the Compare
+Periods page.
+
+\textbf{Heatmap performance.} Rendering individual \texttt{L.rectangle}
+overlays for each pixel becomes a bottleneck at fine resolutions over large
+regions. Migrating to a WebGL-backed canvas layer would provide an
+order-of-magnitude performance improvement and make fine-resolution regional
+analysis practical for large study areas.
+
+\textbf{Longitude wraparound fix.} A known limitation identified during
+development is that Leaflet allows the user to pan beyond the $\pm 180^{\circ}$
+longitude boundary, producing coordinates that SCRAPI cannot process. Normalising
+longitudes to $[-180^{\circ}, 180^{\circ}]$ before issuing API requests would
+eliminate this edge case.
+
+\textbf{Bioclimatic variables.} The SCRAPI API exposes the full set of 19
+WorldClim bioclimatic variables (BIO1--BIO19), which are widely used in species
+distribution modelling and ecological niche analysis. Exposing these variables
+through the Climatica interface would substantially extend its utility for
+researchers in biogeography and ecology.
+
+\textbf{Mobile touch support.} The map drawing interactions on the Region
+Heatmap page are currently optimised for mouse input. Adding touch gesture
+support would make this page fully usable on tablets and smartphones, addressing
+feedback from iPad users encountered during the evaluation.
+
+% ─── 5.6 Concluding Remarks ──────────────────────────────────────────────────
+\section{Concluding Remarks}\label{CONC_REMARKS}
+
+Climatica demonstrates that the WorldClim dataset --- previously accessible
+only to GIS specialists and programmers --- can be made interactively explorable
+for domain experts in forestry, ecology, and related fields through a carefully
+designed web interface. The combination of the WorldClim Virtual Semantic API,
+a locally hosted GeoNames search index, and a Next.js full-stack architecture
+provides a foundation that is both performant and maintainable, and that can
+be extended with additional features as the needs of its user community become
+clearer.
+
+The usability evaluation confirmed that the core design goal --- zero friction
+for non-specialist users --- was successfully achieved. A mean SUS score of
+84.6 and the qualitative feedback from forestry and biology students suggest
+that Climatica occupies a genuine and previously unfilled position in the
+landscape of climate data tools: between the static simplicity of
+Climate-Charts.net and the expert-oriented power of NASA Giovanni or
+Copernicus C3S.
+
+The demo scenarios developed with Prof.\ Dr.\ Felipe Bravo illustrated that
+Climatica is not merely a technical exercise but a practically useful tool
+for real forest management decisions. Whether assessing the suitability of
+tree species under a shifting climate normal or assembling spatial evidence
+for bark beetle outbreak risk, the application provides actionable insights
+in minutes rather than the hours or days that would be required with
+traditional GIS workflows.
+
+On a personal note, developing Climatica was a genuinely rewarding experience.
+Knowing that the application would be used by real students and researchers ---
+as confirmed by the evaluation session --- provided a constant source of
+motivation throughout the project. The internship introduced me to technologies
+and problem domains that were new to me as a developer: semantic web APIs,
+geospatial data processing, and the specific challenges of building interactive
+scientific tools for non-specialist audiences. I am grateful to my supervisors
+and to Prof.\ Dr.\ Felipe Bravo for the opportunity to work on a project with
+real practical value, and I hope that Climatica continues to be useful to the
+forest management and ecology community at the Universidad de Valladolid and
+beyond.
