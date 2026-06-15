@@ -6,9 +6,9 @@ the gap that Climatica addresses. Section~\ref{REL_WORLDCLIM} describes the
 WorldClim dataset and the Virtual Semantic API on which the application depends.
 Section~\ref{REL_SEMWEB} introduces the Semantic Web and Linked Data concepts
 that underlie the API design. Section~\ref{REL_GEONAMES} describes GeoNames and
-the Apache Solr search engine used for city search. Section~\ref{REL_WIKIDATA}
-explains the role of Wikidata as a geographical knowledge base for reverse
-geocoding. Section~\ref{REL_WL} describes the Walter-Lieth climatogram.
+Apache Solr, which power the city search functionality. Section~\ref{REL_WIKIDATA}
+explains the role of Wikidata for reverse geocoding. Section~\ref{REL_WL}
+describes the Walter-Lieth climatogram.
 
 % * ─── 2.1 Existing Climate Data Applications ───────────────────────────────────
 \section{A Survey of Climate Data Applications}\label{REL_APPS}
@@ -271,7 +271,6 @@ exploration of open, globally consistent raster data.
 \end{sidewaystable}
 
 % * ─── 2.2 WorldClim ────────────────────────────────────────────────────────────
-
 \section{WorldClim}\label{REL_WORLDCLIM}
 
 \subsection{The Dataset}\label{REL_WORLDCLIM_DATA}
@@ -286,67 +285,15 @@ at four spatial resolutions: 10 arc-minutes ($\approx$18.5\,km at the equator),
 arc-seconds ($\approx$900\,m).
 
 Seven monthly variables are available in the climate dataset: minimum
-temperature
-(\texttt{tmin}), maximum temperature (\texttt{tmax}), average temperature
-(\texttt{tavg}), precipitation (\texttt{prec}), solar radiation (\texttt{srad}),
-wind speed (\texttt{wind}), and vapour pressure (\texttt{vapr}). Climatica uses
-\texttt{tmin}, \texttt{tmax}, \texttt{tavg}, and \texttt{prec} --- the four
-variables most relevant to general climate characterisation and to the
-construction of Walter-Lieth climatograms.
+temperature (\texttt{tmin}), maximum temperature (\texttt{tmax}), average
+temperature (\texttt{tavg}), precipitation (\texttt{prec}), solar radiation
+(\texttt{srad}), wind speed (\texttt{wind}), and vapour pressure
+(\texttt{vapr}).
 
-\subsubsection{Bioclimatic Variables}\label{REL_WORLDCLIM_BIO}
-
-In addition to the seven monthly variables, WorldClim provides 19 bioclimatic
-variables (BIO1--BIO19) derived algorithmically from the monthly temperature and
-precipitation series. These variables were designed to capture biologically
-meaningful aspects of climate that are not immediately apparent from the raw
-monthly values, and they are widely used as predictors in species distribution
-models and ecological niche analyses.
-
-Table~\ref{tab:bio} lists the 19 bioclimatic variables. Several of them have
-intuitive interpretations: BIO1 is simply the annual mean temperature, BIO12 is
-the total annual precipitation, and BIO4 (temperature seasonality) measures how
-much monthly temperatures vary across the year. Others capture more specific
-relationships, such as BIO8 (mean temperature of the wettest quarter) and BIO18
-(precipitation of the warmest quarter), which are particularly relevant for
-understanding vegetation patterns in seasonally dry regions.
-
-\begin{table}[H]
-  \centering
-  \caption{WorldClim bioclimatic variables (BIO1--BIO19).}
-  \label{tab:bio}
-  \begin{tabular}{ll}
-    \toprule
-    \textbf{Code} & \textbf{Description} \\
-    \midrule
-    BIO1  & Annual Mean Temperature \\
-    BIO2  & Mean Diurnal Range (Mean of monthly max$-$min) \\
-    BIO3  & Isothermality (BIO2/BIO7 $\times$ 100) \\
-    BIO4  & Temperature Seasonality (standard deviation $\times$ 100) \\
-    BIO5  & Max Temperature of Warmest Month \\
-    BIO6  & Min Temperature of Coldest Month \\
-    BIO7  & Temperature Annual Range (BIO5$-$BIO6) \\
-    BIO8  & Mean Temperature of Wettest Quarter \\
-    BIO9  & Mean Temperature of Driest Quarter \\
-    BIO10 & Mean Temperature of Warmest Quarter \\
-    BIO11 & Mean Temperature of Coldest Quarter \\
-    BIO12 & Annual Precipitation \\
-    BIO13 & Precipitation of Wettest Month \\
-    BIO14 & Precipitation of Driest Month \\
-    BIO15 & Precipitation Seasonality (Coefficient of Variation) \\
-    BIO16 & Precipitation of Wettest Quarter \\
-    BIO17 & Precipitation of Driest Quarter \\
-    BIO18 & Precipitation of Warmest Quarter \\
-    BIO19 & Precipitation of Coldest Quarter \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Although Climatica does not currently expose the bioclimatic variables in its
-user interface --- focusing instead on the monthly temperature and precipitation
-series that are more interpretable for general users --- the SCRAPI API provides
-full access to them, and they represent a natural direction for future extension
-of the application.
+WorldClim distributes the raw data as GeoTIFF raster files. The complete archive
+consists of 8{,}836 files totalling approximately 85.6\,GB, which requires GIS
+software or programming libraries such as GDAL or rasterio to process ---
+putting the data out of reach for non-specialist users.
 
 \subsubsection{Interpolation Methodology}\label{REL_WORLDCLIM_INTERP}
 
@@ -368,12 +315,18 @@ The quality of the interpolation varies across the globe. In densely observed
 regions such as Europe and North America, the surfaces are highly reliable, with
 root-mean-square errors of less than 0.5\,$^\circ$C for temperature. In
 data-sparse regions such as the Sahara, central Asia, and the Amazon basin,
-uncertainty is higher. This limitation is inherent to any station-based
-interpolation product and is shared by all tools that use WorldClim as their
-data source, including Climatica.
+uncertainty is higher.
 
-\subsubsection{Historical Weather Data and Climate
-Normals}\label{REL_WORLDCLIM_PERIODS}
+In addition to the seven monthly variables, WorldClim provides 19 yearly
+bioclimatic variables (BIO1--BIO19) derived algorithmically from the monthly
+temperature and precipitation series. These capture biologically meaningful
+aspects of climate such as annual mean temperature (BIO1), annual precipitation
+(BIO12), and temperature seasonality (BIO4), and are widely used as predictors
+in species distribution models and ecological niche analyses. A full description
+of all 19 variables is available at the WorldClim
+website\footnote{\url{https://www.worldclim.org/data/bioclim.html}}.
+
+\subsubsection{Historical Weather Data and Climate Normals}\label{REL_WORLDCLIM_PERIODS}
 
 Alongside the baseline climate data, WorldClim also distributes historical
 monthly weather data for the period 1951--2024, prepared from the CRU-TS-4.09
@@ -382,33 +335,32 @@ Series) is produced by the University of East Anglia and provides monthly
 gridded fields of temperature and precipitation derived from station
 observations, covering the global land surface since 1901.
 
-From the CRU-TS-based weather rasters, WorldClim has computed additional 30-year
-climate normals for the periods 1951--1980, 1961--1990, 1981--2010, and
-1991--2020. Together with the original 1970--2000 baseline, this gives five
-overlapping 30-year periods that can be compared to detect long-term trends.
-Climatica exposes all five periods in its Period Comparison page, allowing a
-user to see, for example, whether summer temperatures in a particular city have
-risen consistently across successive 30-year averages.
+From the CRU-TS-based weather rasters, additional 30-year climate normals for
+the periods 1951--1980, 1961--1990, 1981--2010, and 1991--2020 were prepared
+by Vega Gorgojo~\cite{scrapi} and made available through SCRAPI. Together with
+the original 1970--2000 WorldClim baseline, this gives five overlapping 30-year
+periods that can be compared to detect long-term trends.
 
-The raw data are distributed as GeoTIFF raster files. The complete archive
-consists of 8{,}836 files totalling approximately 85.6\,GB. Converted naively
-to RDF triples for a semantic triplestore, the archive would yield roughly
-375 billion triples requiring 17.7\,petabytes of storage --- approximately
-332 times the capacity of a typical Virtuoso deployment configured with
-16\,GB of RAM~\cite{scrapi}. Even the grid metadata alone, before any pixel
-values are considered, amounts to over 16 billion triples across the four
-spatial resolutions. Working with the raw files directly requires GIS software
-or programming libraries such as GDAL or rasterio --- and this scale is
-precisely the motivation for the virtual graph approach adopted by SCRAPI
-(Section~\ref{REL_WORLDCLIM_API}).
+\subsection{A Virtual Semantic API for WorldClim}\label{REL_WORLDCLIM_API}
 
-\subsection{The Virtual Semantic API}\label{REL_WORLDCLIM_API}
+To make WorldClim data accessible over the web without requiring Geographic
+Information System (GIS) expertise, Guillermo Vega Gorgojo at the Universidad
+de Valladolid developed the WorldClim Virtual Semantic API~\cite{scrapi},
+hereafter referred to as SCRAPI. The design of SCRAPI is motivated by a
+scalability problem inherent in the materialisation approach to semantic spatial
+data.
 
-To make WorldClim data accessible over the web without requiring GIS expertise,
-Guillermo Vega Gorgojo at the Universidad de Valladolid developed the WorldClim
-Virtual Semantic API~\cite{scrapi}, hereafter referred to as SCRAPI. The design
-of SCRAPI is motivated by a scalability problem inherent in the materialisation
-approach to semantic spatial data.
+Even for GIS experts familiar with libraries such as
+GDAL~\cite{gdal}~\cite{rasterio} or rasterio, working directly with the
+WorldClim archive is impractical: the complete dataset comprises over 8{,}836
+raster files totalling approximately 85.6\,GB, each requiring individual
+loading, reprojection, and extraction before any query can be answered. Yet
+climate and weather data of this kind are increasingly needed across multiple
+domains --- forestry, ecology, agriculture, and climate change research ---
+by users who are domain specialists rather than GIS programmers. Semantic Web
+(SW) technologies, described in Section~\ref{REL_SEMWEB}, are specifically
+designed to address this kind of data integration challenge by exposing
+heterogeneous datasets through a common, web-friendly query interface.
 
 A straightforward way to expose raster data as Linked Data would be to convert
 every pixel into RDF triples and load them into a SPARQL triplestore. For the
@@ -419,16 +371,17 @@ web explicitly discourages full materialisation of large raster datasets for
 this reason~\cite{w3c_spatial}.
 
 SCRAPI instead adopts a \emph{virtual graph} approach: no RDF is materialised
-in advance. Queries are answered at request time by the GDAL library reading
-directly from the GeoTIFF files, while the API surface is identical to what a
-fully materialised triplestore would expose. The result is a lightweight, fast,
-and scalable REST service that answers climatic and weather queries at any
-available resolution for any location on Earth.
+in advance. Queries are answered at request time by the GDAL
+library~\cite{gdal} reading directly from the GeoTIFF files, while the API
+surface is identical to what a fully materialised triplestore would expose.
+The result is a lightweight, fast, and scalable Representational State Transfer
+(REST) service that answers climatic and weather queries at any available
+resolution for any location on Earth.
 
 \subsubsection{Data Model}\label{REL_WORLDCLIM_API_MODEL}
 
 SCRAPI organises WorldClim data into four hierarchical resource types, each
-identified by an IRI:
+identified by an Internationalised Resource Identifier (IRI):
 
 \begin{itemize}
   \item \textbf{Grid.} A spatial resolution level. Four grids are defined:
@@ -439,9 +392,9 @@ identified by an IRI:
 
   \item \textbf{Cell.} A single rectangular tile within a grid. A cell is
     identified by its row and column indices (e.g.\
-    \texttt{Cell\_30s\_r5758c21057}). Its representation includes a polygon in
-    WKT format, a centroid, an elevation value, and the IRIs of all pixels
-    located within it.
+    \texttt{Cell\_30s\_r5758c21057}). Its representation includes a polygon in 
+    Well-Known Text (WKT) format~\cite{ogc_wkt}, a centroid, an elevation value, 
+    and the IRIs of all pixels located within it.
 
   \item \textbf{Raster.} A monthly or yearly dataset for one variable and one
     time period (e.g.\ \texttt{Raster\_2.5m\_tmax\_w1996}). Because each
@@ -484,10 +437,9 @@ For regional queries, \texttt{cellsinbox} and \texttt{pixelsinbox} accept a
 bounding box defined by north, south, east, and west coordinates; the polygon
 variants (\texttt{cellsinpolygonGEO}, \texttt{pixelsinpolygonGEO}) accept an
 arbitrary WKT polygon. Results are paginated via \texttt{limit} and
-\texttt{offset} parameters. The \texttt{avgpixelvaluesinbox} and
-\texttt{avgpixelvaluesinpolygonGEO} queries aggregate pixel values into a single
-average per raster and month, which is the operation used by Climatica's heatmap
-page to summarise data across a user-drawn region.
+\texttt{offset} parameters. The \texttt{avgpixelvaluesinbox} and 
+\texttt{avgpixelvaluesinpolygonGEO} queries aggregate pixel values into a 
+single average per raster and month.
 
 \subsubsection{Usage in Climatica}\label{REL_WORLDCLIM_API_USAGE}
 
@@ -504,6 +456,7 @@ geographic bounds
 of each tile and colour-coding each cell according to its value.
 
 % * ─── 2.3 Semantic Web and Linked Data ─────────────────────────────────────────
+
 \section{Semantic Web and Linked Data}\label{REL_SEMWEB}
 
 \subsection{The Resource Description Framework}\label{REL_SEMWEB_RDF}
@@ -526,8 +479,9 @@ components:
     literal (a string, number, or date).
 \end{itemize}
 
-For example, the fact that Madrid is a city with coordinates $40.4^\circ$\,N,
-$3.7^\circ$\,W can be expressed as two triples:
+For example, the following two triples are part of the Wikidata knowledge graph
+and encode the fact that Madrid is a city with coordinates $40.4^\circ$\,N,
+$3.7^\circ$\,W:
 \begin{center}
   \texttt{wd:Q2807} \quad \texttt{wdt:P31} \quad \texttt{wd:Q515} \\
   \texttt{wd:Q2807} \quad \texttt{wdt:P625} \quad \texttt{"40.4 -3.7"}
@@ -555,7 +509,8 @@ A simple illustrative query against the Wikidata graph might ask for
 all entities
 that are instances of \emph{human settlement}:
 
-\begin{lstlisting}[language=SPARQL, caption={A basic SPARQL query over Wikidata.},
+\begin{lstlisting}[language=SPARQL, caption={A SPARQL query over the Wikidata
+  graph retrieving all instances of human settlement.},
   label={lst:sparql_basic}]
 SELECT ?city ?cityLabel WHERE {
   ?city wdt:P31/wdt:P279* wd:Q486972 .
@@ -580,20 +535,26 @@ returns a useful description of that resource. This means that data published by
 different organisations can be linked together simply by reusing the same IRI to
 refer to the same thing.
 
-SCRAPI builds directly on this principle. Every resource in the WorldClim data
-model --- every grid, cell, raster, and pixel --- has a stable HTTP IRI such as:
+For example, the Wikidata IRI for Madrid ---
+\url{https://www.wikidata.org/entity/Q2807} --- returns a structured RDF
+description of the city when dereferenced, including its coordinates, population,
+and links to related entities. Any dataset that wishes to refer to Madrid can
+reuse this IRI, creating a link between otherwise independent data sources.
+
+SCRAPI builds on the same principles by assigning stable HTTP IRIs to every
+resource in the WorldClim data model --- every grid, cell, raster, and pixel.
+Although these IRIs are not yet dereferenceable as RDF, their structure encodes
+the key properties of each resource. For example:
 \begin{center}
   \texttt{http://climate.gsic.uva.es/data/Pixel\_2.5m\_r1151c4211\_prec\_w1953}
 \end{center}
-The structure of this IRI is not arbitrary: it encodes the grid resolution
-(\texttt{2.5m}), the cell row and column (\texttt{r1151c4211}), the climate
-variable (\texttt{prec}), and the time period (\texttt{w1953}). Climatica
-exploits this encoding in its heatmap engine: rather than making a separate API
-call to retrieve the geographic bounds of each pixel, the application parses the
-IRI directly to reconstruct the row and column indices, computes the
-bounding box
-from the known cell dimensions of the grid, and draws the heatmap tile without
-any additional network requests.
+encodes the grid resolution (\texttt{2.5m}), the cell row and column
+(\texttt{r1151c4211}), the climate variable (\texttt{prec}), and the time
+period (\texttt{w1953}). Climatica exploits this encoding in its heatmap
+engine: rather than making a separate API call to retrieve the geographic bounds
+of each pixel, the application parses the IRI directly to reconstruct the row
+and column indices and compute the bounding box from the known cell dimensions
+of the grid.
 
 \subsection{Ontologies}\label{REL_SEMWEB_ONTOLOGIES}
 
@@ -605,13 +566,14 @@ them (e.g.\ a Pixel must belong to exactly one Cell). They allow data from
 different sources to be integrated unambiguously, because both publisher and
 consumer agree on the meaning of each term.
 
-SCRAPI is accompanied by a small ontology at
-\texttt{http://raster.gsic.uva.es/ontology/} that defines the resource types
-used in the WorldClim data model. Climatica does not use this ontology directly
-at runtime, but it provides the vocabulary that makes the IRI structure
-meaningful and stable.
+SCRAPI is accompanied by the RASter Ontology (RASO)~\cite{raso}, which defines
+the resource types used in the WorldClim data model --- Grid, Cell, Raster, and
+Pixel --- together with their properties and relationships. RASO provides the
+vocabulary that makes the IRI structure of SCRAPI resources meaningful and
+stable.
 
 % * ─── 2.4 GeoNames and City Search ─────────────────────────────────────────────
+
 \section{GeoNames and City Search}\label{REL_GEONAMES}
 
 \subsection{The GeoNames Dataset}\label{REL_GEONAMES_DATA}
@@ -673,6 +635,7 @@ Paris. The GeoNames dataset provides broader and more consistent coverage than
 Wikidata for small settlements, particularly in non-European regions.
 
 % * ─── 2.5 Wikidata ─────────────────────────────────────────────────────────────
+
 \section{Wikidata}\label{REL_WIKIDATA}
 
 Wikidata~\cite{wikidata} is a free, collaboratively edited knowledge base
@@ -682,23 +645,18 @@ subjects and objects identified by stable HTTP IRIs (Q-identifiers such as
 \texttt{Q2807} for Madrid) and predicates by P-identifiers. As of 2025,
 Wikidata contains over 100 million items in hundreds of languages.
 
-In the current version of Climatica, Wikidata is used exclusively for
-\textbf{reverse geocoding}: resolving a latitude/longitude pair to a named city.
-This operation is triggered when the user clicks a point on the map or activates
-the ``use my location'' button. The application calls the Wikidata GeoSearch
-endpoint (\texttt{list=geosearch}) with the clicked coordinates and a 10\,km
-search radius, then fetches the label of the nearest result in the active locale
-via \texttt{action=wbgetentities}. Because reverse geocoding is a low-frequency,
-point-in-time operation, the soft-throttling constraints that made Wikidata
-unsuitable for interactive text search (Section~\ref{REL_GEONAMES_WHY}) do not
-apply here.
-
-Wikidata's multilingual labels --- available for nearly every inhabited place on
-Earth --- make it well suited for this role: switching the interface language to
-Spanish or Ukrainian causes the returned city name to appear in that language
-automatically, without any additional lookup.
+For geographical applications, Wikidata is particularly valuable because it
+provides multilingual labels for nearly every inhabited place on Earth, together
+with coordinates, administrative hierarchies, and population figures. Its open
+licence (CC0) and stable HTTP IRIs make it an attractive foundation for
+\textbf{reverse geocoding} --- resolving a latitude/longitude pair to a named
+city --- without relying on proprietary geocoding services. Wikidata exposes a
+GeoSearch endpoint (\texttt{list=geosearch}) that returns entities within a
+given radius of a coordinate pair, and a \texttt{wbgetentities} endpoint that
+fetches multilingual labels for any entity by identifier.
 
 % * ─── 2.6 Walter-Lieth Climatograms ────────────────────────────────────────────
+
 \section{Walter-Lieth Climatograms}\label{REL_WL}
 
 \subsection{Origin and Purpose}\label{REL_WL_ORIGIN}
@@ -748,56 +706,45 @@ The coloured areas between the two curves are the primary information carriers:
     that the site receives less rainfall than it would need to sustain lush
     vegetation.
   \item \textbf{Humid periods} --- months where precipitation / 2 $>$
-    temperature
-    --- are shown in a cool colour (typically blue). They indicate
+    temperature --- are shown in a cool colour (typically blue). They indicate
     surplus water.
 \end{itemize}
 
-A Mediterranean climate, for example, produces a large arid area in summer and
-humid areas in winter --- exactly the pattern visible in
-Figure~\ref{fig:screenshot_climatica_b}, which shows the Walter-Lieth
-climatogram for Valladolid generated by Climatica.
+Figure~\ref{fig:wl_example} shows a Walter-Lieth climatogram for Valladolid
+generated by Climatica. The large yellow area spanning the summer months
+confirms the semi-arid character of the site, while the blue areas in winter
+and spring indicate a surplus of precipitation over evapotranspiration demand.
 
-\subsection{Implementation in Climatica}\label{REL_WL_IMPL}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Images/example-walter-lieth-diagram.png}
+  \caption{Walter-Lieth climatogram for Valladolid (climate dataset,
+    1991--2020). Yellow areas indicate arid months; blue areas indicate
+    humid months.}
+  \label{fig:wl_example}
+\end{figure}
 
-Implementing the Walter-Lieth diagram in a browser-based React application
-presented several non-trivial engineering challenges, because standard charting
-libraries such as Recharts are designed for non-overlapping datasets and do not
-natively support the intersection-fill pattern required by the Walter-Lieth
-convention.
+% * ─── 2.6 Summary ──────────────────────────────────────────────────────────────
+\section{Summary}\label{REL_SUMMARY}
 
-The core difficulty is that the arid and humid fills are not simply the area
-under each curve: they are the regions where one curve is \emph{above} the
-other, which means the fill boundaries change at every crossing point of the two
-curves. A naïve approach --- drawing a blue rectangle wherever precipitation
-exceeds temperature and an orange one wherever temperature exceeds precipitation
---- fails because the two filled regions overlap at the crossing points,
-producing visible artefacts.
+This chapter has surveyed the landscape in which Climatica was developed.
+The review of existing climate data applications revealed a clear gap: no
+publicly available tool combines ease of use, open kilometre-scale raster data,
+interactive multi-view exploration, and support for temporal trend analysis in a
+single registration-free browser interface. The tools closest to Climatica's
+objectives --- ClimateCharts.net and Climate-Data.org --- are accessible but
+static, while the most powerful platforms --- NASA Giovanni and Copernicus C3S
+--- require specialist expertise that puts them out of reach for non-specialist
+users.
 
-The solution adopted in Climatica uses the SVG \texttt{clipPath} element with
-the \textbf{even-odd winding rule}. Both the temperature area (the region from
-the temperature curve down to the baseline) and the precipitation area (the
-region from the precipitation curve down to the baseline) are defined as closed
-SVG paths. A single \texttt{clipPath} is constructed by concatenating these two
-paths. Because the even-odd rule colours a point only if it is enclosed by an
-\emph{odd} number of the component paths, the intersection of the two areas ---
-where both paths overlap --- is automatically excluded. Each fill is
-then painted
-using this clip, producing exactly the correct colouring with no
-artefacts and no
-need to compute crossing points explicitly.
-
-The temperature and precipitation curves themselves are rendered
-using Catmull-Rom
-spline interpolation rather than straight line segments, which produces the
-smooth, organic appearance characteristic of traditional Walter-Lieth diagrams.
-The month labels are localised through the \texttt{next-intl} library, so the
-diagram is fully multilingual without any changes to the rendering logic.
-
-The aridity condition is computed per month as:
-\[
-  \text{isArid}(m) \iff T_{\text{avg}}(m) \times 2 > P(m)
-\]
-where $T_{\text{avg}}(m)$ is the average temperature in $^\circ$C and $P(m)$ is
-the precipitation in mm for month $m$. This is the direct algebraic restatement
-of the Walter-Lieth scaling rule.
+The remaining sections introduced the foundational technologies on which
+Climatica is built. WorldClim provides the historical climate and meteorological
+dataset, exposed through SCRAPI --- a virtual semantic API that avoids the
+scalability problems of full RDF materialisation. GeoNames and Apache Solr
+provide the city search infrastructure, offering fast multilingual partial-word
+matching across 12~million populated places. Wikidata serves as a reverse
+geocoding service for coordinate-based lookups. The Semantic Web and Linked Data
+principles underlie both SCRAPI and the Wikidata integration. Finally, the
+Walter-Lieth climatogram provides the primary visualisation convention adopted
+by Climatica for communicating the seasonal water balance of a location. Chapter
+3 describes how these components were combined into a working application.
