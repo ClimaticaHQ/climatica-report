@@ -1,16 +1,307 @@
-% ─── CHAPTER 4 ────────────────────────────────────────────────────────────────
+% * ─── CHAPTER 4 ────────────────────────────────────────────────────────────────
 \chapter{Evaluation}\label{EVAL}
 
-This chapter presents the evaluation of Climatica. Section~\ref{EVAL_METHOD}
-describes the evaluation methodology and the study design.
-Section~\ref{EVAL_PARTICIPANTS} profiles the participants. Section~\ref{EVAL_SUS}
-reports the usability results derived from the System Usability Scale.
+This chapter presents the evaluation of Climatica.
+Section~\ref{EVAL_DEMO} demonstrates the application through two representative
+usage scenarios drawn from forest management practice.
+Section~\ref{EVAL_METHOD} describes the evaluation methodology and study design.
+Section~\ref{EVAL_PARTICIPANTS} profiles the participants.
+Section~\ref{EVAL_SUS} reports the usability results derived from the System
+Usability Scale.
 Section~\ref{EVAL_QUAL} analyses the open-ended feedback.
-Section~\ref{EVAL_DEMO} presents a representative usage scenario.
 Section~\ref{EVAL_DISCUSS} discusses the results, acknowledges limitations,
 and identifies directions for future work.
 
-% ─── 4.1 Methodology ─────────────────────────────────────────────────────────
+% * ─── 4.1 Demo Scenario ───────────────────────────────────────────────────────
+\section{Demo Scenario}\label{EVAL_DEMO}
+
+This section demonstrates Climatica through two representative usage scenarios
+drawn from forest management practice, suggested by Prof.\ Dr.\ Felipe Bravo,
+Catedrático de Planificación Forestal at the Universidad de Valladolid and
+Director of the Sustainable Forest Management Research Institute (iuFOR).
+
+Both scenarios involve domain specialists --- forest managers and ecologists
+--- who need to interpret historical climate data to support practical
+decisions. While these users possess deep knowledge of forest ecosystems and
+climate science, they typically lack the GIS or programming background
+required to query WorldClim raster files directly, making a tool like
+Climatica particularly valuable for their workflows.
+
+\subsection{Scenario 1: Updating a Forest Management Plan}\label{EVAL_DEMO_FMP}
+
+\subsubsection{Context}
+
+Forest management plans (FMPs) traditionally incorporate an assessment of the
+local climate over the preceding 30-year period. This baseline informs
+decisions about species selection: which tree species are appropriate for a
+given site is determined in part by the temperature range, precipitation
+regime, and aridity of that location. Under a stable climate, a plan valid
+today would remain valid for the life of the forest stand.
+
+Climate change has disrupted this assumption. Mean temperatures across the
+Iberian Peninsula have risen by approximately 1.5\,$^\circ$C over the past
+50 years~\cite{ipcc2021}, and precipitation has become more variable and
+increasingly concentrated in fewer, more intense events. A species that was
+well-suited to a site under the 1961--1990 climate normal may be under
+stress --- or near the edge of its physiological tolerance --- under the
+1991--2020 normal. A forest manager updating an FMP for a stand in Castilla
+y Le\'{o}n therefore needs to understand not only the current climate of the
+site but also how it has shifted over the past three decades.
+
+\subsubsection{Step 1: City Climate Profile}
+
+The manager opens Climatica and searches for \textbf{Valladolid}, the
+administrative centre of the region and the nearest city to many of the
+managed stands. The City Climate page loads the climate profile for the
+1991--2020 climate normal (Figure~\ref{fig:demo_fmp_city}), showing an average
+maximum temperature of 19.3\,$^\circ$C, average minimum temperature of
+7.1\,$^\circ$C, total annual precipitation of 420\,mm, altitude of 699\,m,
+and four arid months. The Martonne aridity index of 18.1 places the site in
+the \emph{Semi-arid} category.
+
+The Walter-Lieth climatogram makes the seasonal water deficit immediately
+visible: the yellow arid area spans four summer months, confirming that the
+site operates close to the physiological tolerance limits of moisture-demanding
+species. This is the baseline against which the manager will assess whether the
+current species composition --- predominantly \textit{Pinus pinea} and
+\textit{Quercus ilex} --- remains appropriate.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-city-climate.png}
+  \caption{City Climate page for Valladolid (climate dataset, 1991--2020
+    normal). The Walter-Lieth climatogram shows four arid summer months
+    (yellow area). The stat cards confirm an average maximum temperature of
+    19.3\,$^\circ$C, total annual precipitation of 420\,mm, and a Martonne
+    aridity index of 18.1 (Semi-arid).}
+  \label{fig:demo_fmp_city}
+\end{figure}
+
+\subsubsection{Step 2: Detecting the Climate Shift}
+
+The manager switches to the \textbf{Compare Periods} page and selects
+Valladolid with the Climate dataset, setting Period~A to 1961--1990 and
+Period~B to 1991--2020 (Figure~\ref{fig:demo_fmp_periods}). The statistics
+table and overlaid chart immediately reveal the direction and magnitude of
+the change: average maximum temperature increased by \textbf{+1.0\,$^\circ$C}
+(from 18.3\,$^\circ$C to 19.3\,$^\circ$C), average minimum temperature
+increased by +0.6\,$^\circ$C, and total annual precipitation decreased by
+\textbf{11\,mm} (from 431\,mm to 420\,mm). The number of arid months
+increased from 4 to 5, meaning that one additional month crossed the aridity
+threshold in the more recent normal. The Martonne aridity index dropped from
+19.3 to 18.1, remaining in the Semi-arid category but moving further from the
+boundary with the less arid class.
+
+The trend indicator cards at the bottom of the page make these changes
+immediately legible: \textbf{+1.0\,$^\circ$C} temperature increase and
+\textbf{$-$12\,mm} precipitation decrease between the two periods. The manager
+records these figures in the FMP as evidence of an ongoing warming and drying
+trend consistent with regional climate projections.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-periods.png}
+  \caption{Compare Periods page for Valladolid comparing the 1961--1990 and
+    1991--2020 climate normals. The statistics table shows a +1.0\,$^\circ$C
+    increase in average maximum temperature and a decrease of 11\,mm in total
+    precipitation. The trend indicator cards at the bottom confirm a
+    temperature increase of +1.0\,$^\circ$C and a precipitation decrease of
+    $-$12\,mm.}
+  \label{fig:demo_fmp_periods}
+\end{figure}
+
+\subsubsection{Step 3: Spatial Distribution across the Management Unit}
+
+Individual city data may not capture the full variability of a large management
+unit. The manager switches to the \textbf{Region Heatmap} page, draws a
+bounding box covering the area around Valladolid, and selects maximum
+temperature under the 1991--2020 climate normal (Figure~\ref{fig:demo_fmp_heatmap}).
+The resulting heatmap over 15 cells reveals a clear spatial gradient: the
+urban core of Valladolid and the surrounding valley floor show the warmest
+values (up to 17.7\,$^\circ$C annual average maximum), while the outlying
+rural cells to the south and east are cooler (down to 15.1\,$^\circ$C). The
+regional profile panel below the map confirms a mean temperature of
+12.8\,$^\circ$C, annual precipitation of 425\,mm, and a Martonne index of
+18.6 across the 15 queried cells.
+
+This spatial resolution is directly actionable: stands in the warmer valley
+cells are operating closer to thermal stress thresholds, while those in the
+cooler peripheral cells have additional buffer. Species selection criteria may
+legitimately differ between these sub-zones within the same management unit.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-heatmap.png}
+  \caption{Region Heatmap page showing the spatial distribution of annual
+    average maximum temperature around Valladolid (climate dataset,
+    1991--2020). The urban core reaches 17.7\,$^\circ$C while peripheral
+    cells are as cool as 15.1\,$^\circ$C. The regional profile below the
+    map summarises the 15 queried cells.}
+  \label{fig:demo_fmp_heatmap}
+\end{figure}
+
+\subsubsection{Step 4: Comparing Alternative Sites}
+
+As a final step, the manager uses the \textbf{Compare Cities} page to place
+Valladolid alongside \textbf{Salamanca}, a city 120\,km to the southwest
+(Figure~\ref{fig:demo_fmp_cities}). The side-by-side comparison under the
+1991--2020 normal shows that Salamanca is already warmer (+1.1\,$^\circ$C
+average maximum) and slightly drier (419\,mm vs.\ 420\,mm), with both cities
+sharing five arid months and a Martonne index in the Semi-arid range
+(16.8 vs.\ 18.1). The insight cards at the bottom confirm that Salamanca is
+the warmer city by 1.2\,$^\circ$C. The manager uses this comparison to inform
+a precautionary approach: species that are currently performing well in
+Salamanca's stands under equivalent soil conditions (\textit{Quercus suber},
+\textit{Pinus pinaster}) are candidates for introduction into the Valladolid
+management unit as climate analogues for mid-century conditions.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-cities.png}
+  \caption{Compare Cities page placing Valladolid (green) alongside Salamanca
+    (orange) under the 1991--2020 climate normal. Salamanca's higher average
+    maximum temperature (20.4\,$^\circ$C vs.\ 19.3\,$^\circ$C) and lower
+    Martonne index (16.8 vs.\ 18.1) make it a useful climate analogue for
+    the conditions Valladolid may face in coming decades.}
+  \label{fig:demo_fmp_cities}
+\end{figure}
+
+\subsubsection{Outcome}
+
+In under fifteen minutes and without installing any software or writing any
+code, the forest manager has: (1)~established the current climate baseline for
+the site under the most recent 30-year normal; (2)~quantified the observed
+shift over the past 60 years (+1.0\,$^\circ$C, $-$12\,mm, one additional arid
+month); (3)~mapped the spatial variation in temperature across the management
+unit at 2.5-minute resolution; and (4)~identified a nearby analogue site to
+guide species selection under anticipated future conditions. All four pages of
+Climatica contributed directly to this workflow, and the results are grounded
+in the same WorldClim raster archive that would underpin a formal scientific
+assessment.
+
+\subsection{Scenario 2: Detecting Climate-Driven Forest Stress}\label{EVAL_DEMO_DECLINE}
+
+\subsubsection{Context}
+
+Climate change is increasingly recognised as a primary driver of forest decline
+across Europe and North America. Warmer temperatures and prolonged summer
+droughts weaken the physiological defences of trees, making them susceptible
+to secondary agents --- most notably bark beetle outbreaks, which have caused
+catastrophic mortality in spruce and pine stands across Central Europe and
+Scandinavia over the past two decades~\cite{seidl2017bark}. Understanding
+whether a particular site has experienced a meaningful shift towards warmer or
+drier conditions over the period in which decline has been observed is a
+necessary first step in attributing mortality to climate stress rather than to
+other causes such as competition, soil degradation, or pathogen pressure.
+
+An ecologist investigating pine stands in the western Pyrenees that have shown
+elevated mortality and bark beetle damage since approximately 2010 wants to
+establish whether the local climate has shifted meaningfully over the study
+period. The nearest city representative of the study area is \textbf{Pamplona}
+(Navarra, Spain).
+
+\subsubsection{Step 1: Multi-period Temperature Trend}
+
+The ecologist opens the \textbf{Compare Periods} page, selects Pamplona, and
+switches to Weather mode. Using the multi-year selector in the sidebar, five
+years are chosen to span the full observation window: 1985, 1995, 2005, 2015,
+and 2023. Each year is assigned a distinct colour (green, amber, blue, rose,
+violet) and the overlaid chart renders all five maximum temperature curves
+simultaneously (Figure~\ref{fig:demo_decline_multiyear}).
+
+The statistics table reveals a clear warming signal: average annual maximum
+temperature increased from 17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in
+2023 --- a rise of \textbf{+1.9\,$^\circ$C} over 38 years. The year 2015
+stands out with the highest average maximum temperature (18.7\,$^\circ$C),
+consistent with the record European heat conditions of that year. The tooltip
+on the July peak confirms that July maximum temperatures were 27\,$^\circ$C
+in 1985--2005 and rose to 28--29\,$^\circ$C in 2015--2023.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-multiyear.png}
+  \caption{Compare Periods page in weather mode for Pamplona showing five
+    selected years (1985, 1995, 2005, 2015, 2023) with maximum temperature.
+    The statistics table shows average annual maximum temperature rising from
+    17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in 2023 (+1.9\,$^\circ$C).
+    The tooltip confirms July maximum temperatures of 27\,$^\circ$C in the
+    earlier years versus 28--29\,$^\circ$C in recent years.}
+  \label{fig:demo_decline_multiyear}
+\end{figure}
+
+\subsubsection{Step 2: Precipitation and Aridity Trend}
+
+The ecologist switches the chart variable to \textbf{Precipitation}
+(Figure~\ref{fig:demo_decline_precip}). The picture here is more variable:
+total annual precipitation ranges from 703\,mm (2005) to 819\,mm (2015),
+with no clear monotonic trend. However, the Martonne aridity index in the
+statistics table shows that all five years remain in the \emph{Humid} category
+(M~$>$~30), with values between 30.7 and 34.7. The bar chart reveals that
+inter-annual variability in summer precipitation is high, with some years
+showing near-zero July and August precipitation while others show moderate
+values. The combination of rising maximum temperatures and variable but
+occasionally very dry summers creates the drought stress conditions most
+damaging to \textit{Pinus sylvestris}.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-precipitation.png}
+  \caption{Compare Periods page in weather mode for Pamplona with precipitation
+    selected. The bar chart shows high inter-annual variability in summer
+    precipitation across the five years. The Martonne index (30.7--34.7)
+    keeps all years in the Humid category, but the combination of rising
+    temperatures and occasional summer drought creates physiological stress
+    conditions for conifers.}
+  \label{fig:demo_decline_precip}
+\end{figure}
+
+\subsubsection{Step 3: Spatial Extent of the Stress Signal}
+
+To assess whether the stress conditions are localised or part of a broader
+regional pattern, the ecologist switches to the \textbf{Region Heatmap} page
+and draws a polygon around the Pyrenean foothills east of Pamplona
+(Figure~\ref{fig:demo_decline_heatmap}). Using the weather dataset for 1991,
+the heatmap over 34 cells reveals a strong elevation-driven thermal gradient:
+the lowland cells in the Ebro valley to the south reach annual average maximum
+temperatures above 11\,$^\circ$C, while the higher-elevation cells in the
+Pyrenean ranges to the north are distinctly cooler (down to 6.8\,$^\circ$C).
+The regional profile confirms a mean temperature of 11.0\,$^\circ$C, annual
+precipitation of 918\,mm, and a Martonne index of 43.8 (\emph{Very-humid}) ---
+conditions that support dense conifer forest but that are increasingly
+susceptible to drought stress during anomalously dry summers.
+
+The spatial pattern makes clear that the bark beetle risk is not uniform across
+the landscape: the warmer, south-facing lowland cells are under greater thermal
+stress than the cooler highland cells, and any management intervention aimed
+at reducing stand vulnerability should prioritise the lower-elevation zones.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-heatmap.png}
+  \caption{Region Heatmap page showing annual average maximum temperature
+    across the Pyrenean foothills east of Pamplona (weather dataset, 1991).
+    The thermal gradient from the warm Ebro valley lowlands (orange--red cells,
+    $>$\,11\,$^\circ$C) to the cooler Pyrenean highlands (blue cells,
+    $<$\,7\,$^\circ$C) is clearly resolved across 34 cells. The regional
+    profile confirms a mean temperature of 11.0\,$^\circ$C and annual
+    precipitation of 918\,mm (Martonne index 43.8, Very-humid).}
+  \label{fig:demo_decline_heatmap}
+\end{figure}
+
+\subsubsection{Outcome}
+
+Within a single session, the ecologist has assembled a coherent body of
+evidence linking the observed forest decline to a documented multi-decade
+warming trend at the study site (+1.9\,$^\circ$C over 38 years), high
+inter-annual variability in summer precipitation creating periodic drought
+stress, and a spatially resolved thermal gradient that identifies the
+lower-elevation, south-facing zones as the most vulnerable parts of the
+landscape. This evidence base --- which would previously have required manual
+extraction from WorldClim GeoTIFF files and custom scripting --- was assembled
+interactively in approximately twenty minutes, using only a web browser and
+no specialist software.
+
+% * ─── 4.2 Methodology ─────────────────────────────────────────────────────────
 \section{Evaluation Methodology}\label{EVAL_METHOD}
 
 The evaluation was conducted as a user study on 3 June 2026 during a
@@ -44,7 +335,7 @@ Participation was voluntary and anonymous. Respondents were asked to confirm
 their informed consent before proceeding. All 27 responses collected were
 retained for analysis; no responses were excluded.
 
-% ─── 4.2 Participant Profile ─────────────────────────────────────────────────
+% * ─── 4.3 Participant Profile ─────────────────────────────────────────────────
 \section{Participant Profile}\label{EVAL_PARTICIPANTS}
 
 Twenty-seven students from ten European institutions completed the
@@ -88,7 +379,7 @@ target audience of domain specialists rather than software developers.
   \normalsize
 \end{table}
 
-% ─── 4.3 SUS Results ─────────────────────────────────────────────────────────
+% * ─── 4.4 Usability Results ───────────────────────────────────────────────────
 \section{Usability Results}\label{EVAL_SUS}
 
 \subsection{System Usability Scale}\label{EVAL_SUS_SCORE}
@@ -161,7 +452,7 @@ detractors; scores above 30 are generally considered good, and scores above 70
 are considered excellent~\cite{reichheld2003nps}. Climatica's score of +44
 therefore indicates a strong recommendation intent among the participant group.
 
-% ─── 4.4 Qualitative Feedback ────────────────────────────────────────────────
+% * ─── 4.5 Qualitative Feedback ────────────────────────────────────────────────
 \section{Qualitative Feedback}\label{EVAL_QUAL}
 
 \subsection{What Participants Liked Most}\label{EVAL_QUAL_LIKED}
@@ -192,12 +483,12 @@ data allows us to understand and assess climate change.''
 
 \subsection{What Participants Liked Least}\label{EVAL_QUAL_DISLIKED}
 
-Nineteen respondents answered the ``liked least'' question. The most commonly
-reported issue was \textbf{the PNG export alignment bug}: several respondents
-from different devices (Windows PC, iPad) noted that text and chart elements
-appeared shifted in exported PNG files relative to their on-screen positions.
-This is a known limitation of the \texttt{html2canvas} library used for
-rasterisation, which does not perfectly replicate all CSS transformations.
+Nineteen respondents answered the ``liked least'' question. The most commonly 
+reported issue was \textbf{the PNG export alignment bug}:
+several respondents from different devices (Windows PC, iPad) noted that text
+and chart elements appeared shifted in exported PNG files relative to their
+on-screen positions. This issue has since been resolved in a subsequent update
+to the export pipeline.
 
 The second reported concern was \textbf{the manual filter application step}.
 Two respondents noted that they had to click ``Apply filters'' after changing
@@ -229,292 +520,7 @@ normals in addition to the existing 30-year normals, and non-overlapping
 periods. One respondent suggested a \textbf{mobile application}, and another
 asked for \textbf{additional language support} beyond the current three locales.
 
-% ─── 4.5 Demo Scenario ───────────────────────────────────────────────────────
-\section{Demo Scenario}\label{EVAL_DEMO}
-
-This section demonstrates Climatica through two representative usage scenarios
-drawn from forest management practice, as suggested by the project supervisor.
-Both scenarios involve non-specialist users --- forest managers and ecologists
---- who need to interpret historical climate data to support practical decisions
-but do not have the GIS or programming background required to query WorldClim
-directly.
-
-\subsection{Scenario 1: Updating a Forest Management Plan}\label{EVAL_DEMO_FMP}
-
-\subsubsection{Context}
-
-Forest management plans (FMPs) traditionally incorporate an assessment of the
-local climate over the preceding 30-year period. This baseline informs
-decisions about species selection: which tree species are appropriate for a
-given site is determined in part by the temperature range, precipitation
-regime, and aridity of that location. Under a stable climate, a plan valid
-today would remain valid for the life of the forest stand.
-
-Climate change has disrupted this assumption. Mean temperatures across the
-Iberian Peninsula have risen by approximately 1.5\,$^\circ$C over the past
-50 years~\cite{ipcc2021}, and precipitation has become more variable and
-increasingly concentrated in fewer, more intense events. A species that was
-well-suited to a site under the 1961--1990 climate normal may be under
-stress --- or near the edge of its physiological tolerance --- under the
-1991--2020 normal. A forest manager updating an FMP for a stand in Castilla
-y Le\'{o}n therefore needs to understand not only the current climate of the
-site but also how it has shifted over the past three decades.
-
-\subsubsection{Step 1: City Climate Profile}
-
-The manager opens Climatica and searches for \textbf{Valladolid}, the
-administrative centre of the region and the nearest city to many of the
-managed stands. The City Climate page loads the climate profile for the
-1991--2020 climate normal (Figure~\ref{fig:demo_fmp_city}), showing an average
-maximum temperature of 19.3\,$^\circ$C, average minimum temperature of
-7.1\,$^\circ$C, total annual precipitation of 420\,mm, altitude of 699\,m,
-and four arid months. The Martonne aridity index of 18.1 places the site in
-the \emph{Semi-arid} category.
-
-The Walter-Lieth climatogram makes the seasonal water deficit immediately
-visible: the yellow arid area spans four summer months, confirming that the
-site operates close to the physiological tolerance limits of moisture-demanding
-species. This is the baseline against which the manager will assess whether the
-current species composition --- predominantly \textit{Pinus pinea} and
-\textit{Quercus ilex} --- remains appropriate.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-city-climate.png}
-  \caption{City Climate page for Valladolid (climate dataset, 1991--2020
-    normal). The Walter-Lieth climatogram shows four arid summer months
-    (yellow area). The stat cards confirm an average maximum temperature of
-    19.3\,$^\circ$C, total annual precipitation of 420\,mm, and a Martonne
-    aridity index of 18.1 (Semi-arid).}
-  \label{fig:demo_fmp_city}
-\end{figure}
-
-\subsubsection{Step 2: Detecting the Climate Shift}
-
-The manager switches to the \textbf{Compare Periods} page and selects
-Valladolid with the Climate dataset, setting Period~A to 1961--1990 and
-Period~B to 1991--2020 (Figure~\ref{fig:demo_fmp_periods}). The statistics
-table and overlaid chart immediately reveal the direction and magnitude of
-the change: average maximum temperature increased by \textbf{+1.0\,$^\circ$C}
-(from 18.3\,$^\circ$C to 19.3\,$^\circ$C), average minimum temperature
-increased by +0.6\,$^\circ$C, and total annual precipitation decreased by
-\textbf{11\,mm} (from 431\,mm to 420\,mm). The number of arid months
-increased from 4 to 5, meaning that one additional month crossed the aridity
-threshold in the more recent normal. The Martonne aridity index dropped from
-19.3 to 18.1, remaining in the Semi-arid category but moving further from the
-boundary with the less arid class.
-
-The trend indicator cards at the bottom of the page make these changes
-immediately legible: \textbf{+1.0\,$^\circ$C} temperature increase and
-\textbf{$-$12\,mm} precipitation decrease between the two periods. The manager
-records these figures in the FMP as evidence of an ongoing warming and drying
-trend consistent with regional climate projections.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-periods.png}
-  \caption{Compare Periods page for Valladolid comparing the 1961--1990 and
-    1991--2020 climate normals. The statistics table shows a +1.0\,$^\circ$C
-    increase in average maximum temperature and a decrease of 11\,mm in total
-    precipitation. The trend indicator cards at the bottom confirm a
-    temperature increase of +1.0\,$^\circ$C and a precipitation decrease of
-    $-$12\,mm.}
-  \label{fig:demo_fmp_periods}
-\end{figure}
-
-\subsubsection{Step 3: Spatial Distribution across the Management Unit}
-
-Individual city data may not capture the full variability of a large management
-unit. The manager switches to the \textbf{Region Heatmap} page, draws a
-bounding box covering the area around Valladolid, and selects maximum
-temperature under the 1991--2020 climate normal (Figure~\ref{fig:demo_fmp_heatmap}).
-The resulting heatmap over 15 cells reveals a clear spatial gradient: the
-urban core of Valladolid and the surrounding valley floor show the warmest
-values (up to 17.7\,$^\circ$C annual average maximum), while the outlying
-rural cells to the south and east are cooler (down to 15.1\,$^\circ$C). The
-regional profile panel below the map confirms a mean temperature of
-12.8\,$^\circ$C, annual precipitation of 425\,mm, and a Martonne index of
-18.6 across the 15 queried cells.
-
-This spatial resolution is directly actionable: stands in the warmer valley
-cells are operating closer to thermal stress thresholds, while those in the
-cooler peripheral cells have additional buffer. Species selection criteria may
-legitimately differ between these sub-zones within the same management unit.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-heatmap.png}
-  \caption{Region Heatmap page showing the spatial distribution of annual
-    average maximum temperature around Valladolid (climate dataset,
-    1991--2020). The urban core reaches 17.7\,$^\circ$C while peripheral
-    cells are as cool as 15.1\,$^\circ$C. The regional profile below the
-    map summarises the 15 queried cells.}
-  \label{fig:demo_fmp_heatmap}
-\end{figure}
-
-\subsubsection{Step 4: Comparing Alternative Sites}
-
-As a final step, the manager uses the \textbf{Compare Cities} page to place
-Valladolid alongside \textbf{Salamanca}, a city 120\,km to the southwest
-(Figure~\ref{fig:demo_fmp_cities}). The side-by-side comparison under the
-1991--2020 normal shows that Salamanca is already warmer (+1.1\,$^\circ$C
-average maximum) and slightly drier (419\,mm vs.\ 420\,mm), with both cities
-sharing five arid months and a Martonne index in the Semi-arid range
-(16.8 vs.\ 18.1). The insight cards at the bottom confirm that Salamanca is
-the warmer city by 1.2\,$^\circ$C. The manager uses this comparison to inform
-a precautionary approach: species that are currently performing well in
-Salamanca's stands under equivalent soil conditions (\textit{Quercus suber},
-\textit{Pinus pinaster}) are candidates for introduction into the Valladolid
-management unit as climate analogues for mid-century conditions.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-cities.png}
-  \caption{Compare Cities page placing Valladolid (green) alongside Salamanca
-    (orange) under the 1991--2020 climate normal. Salamanca's higher average
-    maximum temperature (20.4\,$^\circ$C vs.\ 19.3\,$^\circ$C) and lower
-    Martonne index (16.8 vs.\ 18.1) make it a useful climate analogue for
-    the conditions Valladolid may face in coming decades.}
-  \label{fig:demo_fmp_cities}
-\end{figure}
-
-\subsubsection{Outcome}
-
-In under fifteen minutes and without installing any software or writing any
-code, the forest manager has: (1)~established the current climate baseline for
-the site under the most recent 30-year normal; (2)~quantified the observed
-shift over the past 60 years (+1.0\,$^\circ$C, $-$12\,mm, one additional arid
-month); (3)~mapped the spatial variation in temperature across the management
-unit at 2.5-minute resolution; and (4)~identified a nearby analogue site to
-guide species selection under anticipated future conditions. All four pages of
-Climatica contributed directly to this workflow, and the results are grounded
-in the same WorldClim raster archive that would underpin a formal scientific
-assessment.
-
-% ─── 4.5.2 Scenario 2 ────────────────────────────────────────────────────────
-\subsection{Scenario 2: Detecting Climate-Driven Forest Stress}\label{EVAL_DEMO_DECLINE}
-
-\subsubsection{Context}
-
-Climate change is increasingly recognised as a primary driver of forest decline
-across Europe and North America. Warmer temperatures and prolonged summer
-droughts weaken the physiological defences of trees, making them susceptible
-to secondary agents --- most notably bark beetle outbreaks, which have caused
-catastrophic mortality in spruce and pine stands across Central Europe and
-Scandinavia over the past two decades~\cite{seidl2017bark}. Understanding
-whether a particular site has experienced a meaningful shift towards warmer or
-drier conditions over the period in which decline has been observed is a
-necessary first step in attributing mortality to climate stress rather than to
-other causes such as competition, soil degradation, or pathogen pressure.
-
-An ecologist investigating pine stands in the western Pyrenees that have shown
-elevated mortality and bark beetle damage since approximately 2010 wants to
-establish whether the local climate has shifted meaningfully over the study
-period. The nearest city representative of the study area is \textbf{Pamplona}
-(Navarra, Spain).
-
-\subsubsection{Step 1: Multi-period Temperature Trend}
-
-The ecologist opens the \textbf{Compare Periods} page, selects Pamplona, and
-switches to Weather mode. Using the multi-year selector in the sidebar, five
-years are chosen to span the full observation window: 1985, 1995, 2005, 2015,
-and 2023. Each year is assigned a distinct colour (green, amber, blue, rose,
-violet) and the overlaid chart renders all five maximum temperature curves
-simultaneously (Figure~\ref{fig:demo_decline_multiyear}).
-
-The statistics table reveals a clear warming signal: average annual maximum
-temperature increased from 17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in
-2023 --- a rise of \textbf{+1.9\,$^\circ$C} over 38 years. The year 2015
-stands out with the highest average maximum temperature (18.7\,$^\circ$C),
-consistent with the record European heat conditions of that year. The tooltip
-on the July peak confirms that July maximum temperatures were 27\,$^\circ$C
-in 1985--2005 and rose to 28--29\,$^\circ$C in 2015--2023.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-multiyear.png}
-  \caption{Compare Periods page in weather mode for Pamplona showing five
-    selected years (1985, 1995, 2005, 2015, 2023) with maximum temperature.
-    The statistics table shows average annual maximum temperature rising from
-    17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in 2023 (+1.9\,$^\circ$C).
-    The tooltip confirms July maximum temperatures of 27\,$^\circ$C in the
-    earlier years versus 28--29\,$^\circ$C in recent years.}
-  \label{fig:demo_decline_multiyear}
-\end{figure}
-
-\subsubsection{Step 2: Precipitation and Aridity Trend}
-
-The ecologist switches the chart variable to \textbf{Precipitation}
-(Figure~\ref{fig:demo_decline_precip}). The picture here is more variable:
-total annual precipitation ranges from 703\,mm (2005) to 819\,mm (2015),
-with no clear monotonic trend. However, the Martonne aridity index in the
-statistics table shows that all five years remain in the \emph{Humid} category
-(M~$>$~30), with values between 30.7 and 34.7. The bar chart reveals that
-inter-annual variability in summer precipitation is high, with some years
-showing near-zero July and August precipitation while others show moderate
-values. The combination of rising maximum temperatures and variable but
-occasionally very dry summers creates the drought stress conditions most
-damaging to \textit{Pinus sylvestris}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-precipitation.png}
-  \caption{Compare Periods page in weather mode for Pamplona with precipitation
-    selected. The bar chart shows high inter-annual variability in summer
-    precipitation across the five years. The Martonne index (30.7--34.7)
-    keeps all years in the Humid category, but the combination of rising
-    temperatures and occasional summer drought creates physiological stress
-    conditions for conifers.}
-  \label{fig:demo_decline_precip}
-\end{figure}
-
-\subsubsection{Step 3: Spatial Extent of the Stress Signal}
-
-To assess whether the stress conditions are localised or part of a broader
-regional pattern, the ecologist switches to the \textbf{Region Heatmap} page
-and draws a polygon around the Pyrenean foothills east of Pamplona
-(Figure~\ref{fig:demo_decline_heatmap}). Using the weather dataset for 1991,
-the heatmap over 34 cells reveals a strong elevation-driven thermal gradient:
-the lowland cells in the Ebro valley to the south reach annual average maximum
-temperatures above 11\,$^\circ$C, while the higher-elevation cells in the
-Pyrenean ranges to the north are distinctly cooler (down to 6.8\,$^\circ$C).
-The regional profile confirms a mean temperature of 11.0\,$^\circ$C, annual
-precipitation of 918\,mm, and a Martonne index of 43.8 (\emph{Very-humid}) ---
-conditions that support dense conifer forest but that are increasingly
-susceptible to drought stress during anomalously dry summers.
-
-The spatial pattern makes clear that the bark beetle risk is not uniform across
-the landscape: the warmer, south-facing lowland cells are under greater thermal
-stress than the cooler highland cells, and any management intervention aimed
-at reducing stand vulnerability should prioritise the lower-elevation zones.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-heatmap.png}
-  \caption{Region Heatmap page showing annual average maximum temperature
-    across the Pyrenean foothills east of Pamplona (weather dataset, 1991).
-    The thermal gradient from the warm Ebro valley lowlands (orange--red cells,
-    $>$\,11\,$^\circ$C) to the cooler Pyrenean highlands (blue cells,
-    $<$\,7\,$^\circ$C) is clearly resolved across 34 cells. The regional
-    profile confirms a mean temperature of 11.0\,$^\circ$C and annual
-    precipitation of 918\,mm (Martonne index 43.8, Very-humid).}
-  \label{fig:demo_decline_heatmap}
-\end{figure}
-
-\subsubsection{Outcome}
-
-Within a single session, the ecologist has assembled a coherent body of
-evidence linking the observed forest decline to a documented multi-decade
-warming trend at the study site (+1.9\,$^\circ$C over 38 years), high
-inter-annual variability in summer precipitation creating periodic drought
-stress, and a spatially resolved thermal gradient that identifies the
-lower-elevation, south-facing zones as the most vulnerable parts of the
-landscape. This evidence base --- which would previously have required manual
-extraction from WorldClim GeoTIFF files and custom scripting --- was assembled
-interactively in approximately twenty minutes, using only a web browser and
-no specialist software.
-
-% ─── 4.6 Discussion ──────────────────────────────────────────────────────────
+% * ─── 4.6 Discussion ──────────────────────────────────────────────────────────
 \section{Discussion}\label{EVAL_DISCUSS}
 
 \subsection{Interpretation of Results}\label{EVAL_DISCUSS_RESULTS}
@@ -616,5 +622,3 @@ deployment serves a responsive web interface, but the map drawing interactions
 Spanish, and Ukrainian would broaden accessibility. The \texttt{next-intl}
 infrastructure already in place makes adding new locales straightforward;
 the main effort is in translating the 233 keys per locale.
-
-
