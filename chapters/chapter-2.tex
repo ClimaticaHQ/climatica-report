@@ -5,10 +5,10 @@ Section~\ref{REL_APPS} reviews existing climate data applications and identifies
 the gap that Climatica addresses. Section~\ref{REL_WORLDCLIM} describes the
 WorldClim dataset and the Virtual Semantic API on which the application depends.
 Section~\ref{REL_SEMWEB} introduces the Semantic Web and Linked Data concepts
-that underlie the API design. Section~\ref{REL_GEONAMES} describes GeoNames and
-Apache Solr, which power the city search functionality. Section~\ref{REL_WIKIDATA}
-explains the role of Wikidata for reverse geocoding. Section~\ref{REL_WL}
-describes the Walter-Lieth climatogram.
+that underlie the API design, including Wikidata as a representative example of
+a Linked Data knowledge graph. Section~\ref{REL_GEONAMES} describes GeoNames
+and Apache Solr, which power the city search functionality.
+Section~\ref{REL_WL} describes the Walter-Lieth climatogram.
 
 % * ─── 2.1 Existing Climate Data Applications ───────────────────────────────────
 \section{A Survey of Climate Data Applications}\label{REL_APPS}
@@ -525,7 +525,7 @@ of} predicate once, then follow \emph{subclass of} zero or more times. This
 single expression traverses the entire class hierarchy beneath \emph{human
 settlement} (Q486972), matching cities, towns, villages, hamlets, and any other
 subclass. Climatica uses this pattern for reverse geocoding via Wikidata, as
-described in Section~\ref{REL_WIKIDATA}.
+described in Section~\ref{REL_SEMWEB_WIKIDATA}.
 
 \subsection{IRIs and the Linked Data Principles}\label{REL_SEMWEB_LD}
 
@@ -572,78 +572,15 @@ Pixel --- together with their properties and relationships. RASO provides the
 vocabulary that makes the IRI structure of SCRAPI resources meaningful and
 stable.
 
-% * ─── 2.4 GeoNames and City Search ─────────────────────────────────────────────
+\subsection{Wikidata as a Linked Data Knowledge Graph}\label{REL_SEMWEB_WIKIDATA}
 
-\section{GeoNames and City Search}\label{REL_GEONAMES}
-
-\subsection{The GeoNames Dataset}\label{REL_GEONAMES_DATA}
-
-GeoNames~\cite{geonames} is a free geographical database covering over
-11~million place names worldwide, available under a Creative Commons Attribution
-licence. Its primary distribution file, \texttt{allCountries.txt}, contains over
-12~million records of populated places, administrative regions,
-natural features,
-and points of interest, each annotated with coordinates, feature class, country
-code, population, and elevation. A companion file,
-\texttt{alternateNamesV2.txt}, provides localised names for each record in
-hundreds of languages, making GeoNames the most comprehensive open multilingual
-gazetteer available.
-
-For the purpose of city search, Climatica filters the full dataset to populated
-places only (GeoNames feature class \texttt{P}, covering settlement codes
-\texttt{PPL}, \texttt{PPLA}, \texttt{PPLA2}--\texttt{PPLA5}, and \texttt{PPLC}).
-A Python preprocessing script merges the two source files, extracts the English,
-Spanish, and Ukrainian preferred names for each record, and writes a compact
-\texttt{cities.csv} file used for indexing.
-
-\subsection{Apache Solr and Full-Text Search}\label{REL_GEONAMES_SOLR}
-
-Apache Solr~\cite{apache_solr} is an open-source enterprise search platform
-built on Apache Lucene. It provides a REST API for indexing and querying
-documents, with support for rich text analysis pipelines, faceted search, and
-geospatial filtering. Solr was chosen for Climatica's city search over
-alternatives such as PostgreSQL full-text search or Elasticsearch because of
-its mature support for custom tokenisation via \texttt{solrconfig.xml} and its
-low memory footprint when running alongside the application on the university
-server.
-
-The key feature exploited in Climatica is \textbf{trigram tokenisation}. A
-trigram analyser breaks each indexed name into overlapping three-character
-substrings: the name \texttt{Valladolid} produces tokens such as
-\texttt{val}, \texttt{all}, \texttt{lla}, \texttt{lad}, and so on. At query
-time the same analyser is applied to the user's input, so a query of
-\texttt{``val''} matches \texttt{Valladolid} without requiring the user to type
-a complete prefix. This enables fast, tolerant partial-word matching across all
-12~million indexed city names in three languages simultaneously.
-
-\subsection{Why GeoNames and Solr Instead of Wikidata}\label{REL_GEONAMES_WHY}
-
-The initial version of Climatica used Wikidata for city search via a two-step
-pipeline: a \texttt{wbsearchentities} call followed by a SPARQL filter query
-(Section~\ref{REL_WIKIDATA}). This approach required no local infrastructure
-but introduced two limitations that became significant under interactive use.
-First, Wikidata applies soft-throttling to high-frequency queries from a single
-origin, causing intermittent failures under rapid typing. Second, the ranking of
-results depended entirely on Wikidata's internal scoring, with no way to tune
-relevance or promote more populous cities without modifying the SPARQL query.
-
-Replacing Wikidata city search with a locally hosted Solr index eliminates both
-limitations: queries are served from infrastructure under full control, and the
-ranking function can be tuned freely --- for example, by boosting the
-\texttt{population} field so that Paris always ranks above smaller cities named
-Paris. The GeoNames dataset provides broader and more consistent coverage than
-Wikidata for small settlements, particularly in non-European regions.
-
-% * ─── 2.5 Wikidata ─────────────────────────────────────────────────────────────
-
-\section{Wikidata}\label{REL_WIKIDATA}
-
-Wikidata~\cite{wikidata} is a free, collaboratively edited knowledge base
-maintained by the Wikimedia Foundation. It stores structured data as
-subject--predicate--object statements following Linked Data principles, with
-subjects and objects identified by stable HTTP IRIs (Q-identifiers such as
-\texttt{Q2807} for Madrid) and predicates by P-identifiers. As of 2025,
-Wikidata contains over 100 million items in hundreds of languages.
+Wikidata~\cite{wikidata} is a prominent example of a cross-domain knowledge
+graph that follows Semantic Web standards in practice. Maintained by the
+Wikimedia Foundation, it stores structured data as subject--predicate--object
+statements, with subjects and objects identified by stable HTTP IRIs
+(Q-identifiers such as \texttt{Q2807} for Madrid) and predicates by
+P-identifiers. As of 2025, Wikidata contains over 100 million items in hundreds
+of languages, covering people, places, organisations, and more.
 
 For geographical applications, Wikidata is particularly valuable because it
 provides multilingual labels for nearly every inhabited place on Earth, together
@@ -655,7 +592,38 @@ GeoSearch endpoint (\texttt{list=geosearch}) that returns entities within a
 given radius of a coordinate pair, and a \texttt{wbgetentities} endpoint that
 fetches multilingual labels for any entity by identifier.
 
-% * ─── 2.6 Walter-Lieth Climatograms ────────────────────────────────────────────
+% * ─── 2.4 GeoNames and City Search ─────────────────────────────────────────────
+
+\section{GeoNames and City Search}\label{REL_GEONAMES}
+
+\subsection{The GeoNames Dataset}\label{REL_GEONAMES_DATA}
+
+GeoNames~\cite{geonames} is a free geographical database available under a
+Creative Commons Attribution licence. Its primary distribution file,
+\texttt{allCountries.txt}, contains over 12~million records covering populated
+places, administrative regions, natural features, and points of interest,
+each annotated with coordinates, feature class, country code, population,
+and elevation. A companion file, \texttt{alternateNamesV2.txt}, provides
+localised names for each record in hundreds of languages, making GeoNames
+the most comprehensive open multilingual gazetteer available.
+
+\subsection{Apache Solr and Full-Text Search}\label{REL_GEONAMES_SOLR}
+
+Apache Solr~\cite{apache_solr} is an open-source enterprise search platform
+built on Apache Lucene. It provides a REST API for indexing and querying
+documents, with support for rich text analysis pipelines, faceted search, and
+geospatial filtering.
+
+The key feature exploited in Climatica is \textbf{trigram tokenisation}. A
+trigram analyser breaks each indexed name into overlapping three-character
+substrings: the name \texttt{Valladolid} produces tokens such as
+\texttt{val}, \texttt{all}, \texttt{lla}, \texttt{lad}, and so on. At query
+time the same analyser is applied to the user's input, so a query of
+\texttt{``val''} matches \texttt{Valladolid} without requiring the user to type
+a complete prefix. This enables fast, tolerant partial-word matching across all
+12~million indexed city names in three languages simultaneously.
+
+% * ─── 2.5 Walter-Lieth Climatograms ────────────────────────────────────────────
 
 \section{Walter-Lieth Climatograms}\label{REL_WL}
 
