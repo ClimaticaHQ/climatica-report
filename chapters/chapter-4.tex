@@ -24,7 +24,7 @@ Both scenarios involve domain specialists --- forest managers and ecologists
 --- who need to interpret historical climate data to support practical
 decisions. While these users possess deep knowledge of forest ecosystems and
 climate science, they typically lack the GIS or programming background
-required to query WorldClim raster files directly, making a tool like
+required to query WorldClim raster files directly, making an application like
 Climatica particularly valuable for their workflows.
 
 \subsection{Scenario 1: Updating a Forest Management Plan}\label{EVAL_DEMO_FMP}
@@ -68,12 +68,14 @@ current species composition --- predominantly \textit{Pinus pinea} and
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-city-climate.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-fmp-city-climate.png}
   \caption{City Climate page for Valladolid (climate dataset, 1991--2020
-    normal). The Walter-Lieth climatogram shows four arid summer months
-    (yellow area). The stat cards confirm an average maximum temperature of
-    19.3\,$^\circ$C, total annual precipitation of 420\,mm, and a Martonne
-    aridity index of 18.1 (Semi-arid).}
+  normal). The Walter-Lieth climatogram shows four arid summer months
+  (yellow area). The stat cards confirm an average maximum temperature of
+  19.3\,$^\circ$C, total annual precipitation of 420\,mm, and a Martonne
+  aridity index of 18.1 (Semi-arid).%
+  \footnote{\url{https://climatica.gsic.uva.es/climate-statistics?city=Valladolid&lat=41.6554&lng=-4.7235&dataset=climate&var=tmax%2Ctmin%2Cprec&grid=5m&months=all&period=c1991-2020}}}
+  
   \label{fig:demo_fmp_city}
 \end{figure}
 
@@ -87,26 +89,26 @@ the change: average maximum temperature increased by \textbf{+1.0\,$^\circ$C}
 (from 18.3\,$^\circ$C to 19.3\,$^\circ$C), average minimum temperature
 increased by +0.6\,$^\circ$C, and total annual precipitation decreased by
 \textbf{11\,mm} (from 431\,mm to 420\,mm). The number of arid months
-increased from 4 to 5, meaning that one additional month crossed the aridity
-threshold in the more recent normal. The Martonne aridity index dropped from
-19.3 to 18.1, remaining in the Semi-arid category but moving further from the
-boundary with the less arid class.
+increased from 3 to 4 between the two periods, meaning that one additional 
+month crossed the aridity threshold in the more recent normal. The Martonne 
+aridity index dropped from 19.3 to 18.1, remaining in the Semi-arid category 
+but moving further from the boundary with the less arid class.
 
-The trend indicator cards at the bottom of the page make these changes
-immediately legible: \textbf{+1.0\,$^\circ$C} temperature increase and
-\textbf{$-$12\,mm} precipitation decrease between the two periods. The manager
+The manager
 records these figures in the FMP as evidence of an ongoing warming and drying
 trend consistent with regional climate projections.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-periods.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-fmp-compare-periods.png}
   \caption{Compare Periods page for Valladolid comparing the 1961--1990 and
     1991--2020 climate normals. The statistics table shows a +1.0\,$^\circ$C
     increase in average maximum temperature and a decrease of 11\,mm in total
     precipitation. The trend indicator cards at the bottom confirm a
     temperature increase of +1.0\,$^\circ$C and a precipitation decrease of
-    $-$12\,mm.}
+    $-$12\,mm.%
+    \footnote{\url{https://climatica.gsic.uva.es/compare-periods?city=Valladolid&lat=41.6554&lng=-4.7235&dataset=climate&var=tmax%2Ctmin%2Cprec&grid=5m&months=all&period1=c1961-1990&period2=c1991-2020}}}
+
   \label{fig:demo_fmp_periods}
 \end{figure}
 
@@ -131,12 +133,14 @@ legitimately differ between these sub-zones within the same management unit.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-heatmap.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-fmp-heatmap.png}
   \caption{Region Heatmap page showing the spatial distribution of annual
     average maximum temperature around Valladolid (climate dataset,
     1991--2020). The urban core reaches 17.7\,$^\circ$C while peripheral
     cells are as cool as 15.1\,$^\circ$C. The regional profile below the
-    map summarises the 15 queried cells.}
+    map summarises the 15 queried cells.%
+    \footnote{\url{https://climatica.gsic.uva.es/heat-map?dataset=climate&var=tmax%2Ctmin%2Cprec&grid=2.5m&period=c1991-2020&north=41.723627485269766&south=41.58970039344626&west=-4.827399740322792&east=-4.643331682943493}}}
+
   \label{fig:demo_fmp_heatmap}
 \end{figure}
 
@@ -146,8 +150,8 @@ As a final step, the manager uses the \textbf{Compare Cities} page to place
 Valladolid alongside \textbf{Salamanca}, a city 120\,km to the southwest
 (Figure~\ref{fig:demo_fmp_cities}). The side-by-side comparison under the
 1991--2020 normal shows that Salamanca is already warmer (+1.1\,$^\circ$C
-average maximum) and slightly drier (419\,mm vs.\ 420\,mm), with both cities
-sharing five arid months and a Martonne index in the Semi-arid range
+average maximum), with both cities
+sharing four arid months and a Martonne index in the Semi-arid range
 (16.8 vs.\ 18.1). The insight cards at the bottom confirm that Salamanca is
 the warmer city by 1.2\,$^\circ$C. The manager uses this comparison to inform
 a precautionary approach: species that are currently performing well in
@@ -157,12 +161,14 @@ management unit as climate analogues for mid-century conditions.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-fmp-compare-cities.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-fmp-compare-cities.png}
   \caption{Compare Cities page placing Valladolid (green) alongside Salamanca
     (orange) under the 1991--2020 climate normal. Salamanca's higher average
     maximum temperature (20.4\,$^\circ$C vs.\ 19.3\,$^\circ$C) and lower
     Martonne index (16.8 vs.\ 18.1) make it a useful climate analogue for
-    the conditions Valladolid may face in coming decades.}
+    the conditions Valladolid may face in coming decades.%
+    \footnote{\url{https://climatica.gsic.uva.es/compare-cities?cityA=Valladolid&latA=41.6554&lngA=-4.7235&cityB=Salamanca&latB=40.9688&lngB=-5.6639&dataset=climate&var=tmax%2Ctmin%2Cprec&grid=2.5m&period=c1991-2020}}}
+
   \label{fig:demo_fmp_cities}
 \end{figure}
 
@@ -213,19 +219,21 @@ The statistics table reveals a clear warming signal: average annual maximum
 temperature increased from 17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in
 2023 --- a rise of \textbf{+1.9\,$^\circ$C} over 38 years. The year 2015
 stands out with the highest average maximum temperature (18.7\,$^\circ$C),
-consistent with the record European heat conditions of that year. The tooltip
+consistent with the record European heat conditions of that year~\cite{ipcc2021}. The tooltip
 on the July peak confirms that July maximum temperatures were 27\,$^\circ$C
 in 1985--2005 and rose to 28--29\,$^\circ$C in 2015--2023.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-multiyear.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-decline-multiyear.png}
   \caption{Compare Periods page in weather mode for Pamplona showing five
     selected years (1985, 1995, 2005, 2015, 2023) with maximum temperature.
     The statistics table shows average annual maximum temperature rising from
     17.7\,$^\circ$C in 1985 to 19.6\,$^\circ$C in 2023 (+1.9\,$^\circ$C).
     The tooltip confirms July maximum temperatures of 27\,$^\circ$C in the
-    earlier years versus 28--29\,$^\circ$C in recent years.}
+    earlier years versus 28--29\,$^\circ$C in recent years.%
+    \footnote{\url{https://climatica.gsic.uva.es/compare-periods?city=Pamplona&lat=42.8169&lng=-1.6432&dataset=weather&var=tmax%2Ctmin%2Cprec&grid=2.5m&months=all&periods=1985%2C1995%2C2005%2C2015%2C2023}}}
+
   \label{fig:demo_decline_multiyear}
 \end{figure}
 
@@ -245,13 +253,15 @@ damaging to \textit{Pinus sylvestris}.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-precipitation.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-decline-precipitation.png}
   \caption{Compare Periods page in weather mode for Pamplona with precipitation
     selected. The bar chart shows high inter-annual variability in summer
     precipitation across the five years. The Martonne index (30.7--34.7)
     keeps all years in the Humid category, but the combination of rising
     temperatures and occasional summer drought creates physiological stress
-    conditions for conifers.}
+    conditions for conifers.%
+    \footnote{\url{https://climatica.gsic.uva.es/compare-periods?city=Pamplona&lat=42.8169&lng=-1.6432&dataset=weather&var=tmax%2Ctmin%2Cprec&grid=2.5m&months=all&periods=1985%2C1995%2C2005%2C2015%2C2023}}}
+
   \label{fig:demo_decline_precip}
 \end{figure}
 
@@ -277,14 +287,16 @@ at reducing stand vulnerability should prioritise the lower-elevation zones.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-demo-decline-heatmap.png}
+  \includegraphics[width=\textwidth]{Images/climatica-demo-decline-heatmap.png}
   \caption{Region Heatmap page showing annual average maximum temperature
     across the Pyrenean foothills east of Pamplona (weather dataset, 1991).
     The thermal gradient from the warm Ebro valley lowlands (orange--red cells,
     $>$\,11\,$^\circ$C) to the cooler Pyrenean highlands (blue cells,
     $<$\,7\,$^\circ$C) is clearly resolved across 34 cells. The regional
     profile confirms a mean temperature of 11.0\,$^\circ$C and annual
-    precipitation of 918\,mm (Martonne index 43.8, Very-humid).}
+    precipitation of 918\,mm (Martonne index 43.8, Very-humid).%
+    \footnote{\url{https://climatica.gsic.uva.es/heat-map?dataset=weather&var=tmax%2Ctmin%2Cprec&grid=2.5m&year=1991&polygon=POLYGON%28%28-1.7405187919516065+42.8667978158502%2C+-1.7281560119783657+42.79830074711698%2C+-1.6347483410694652+42.758981410137366%2C+-1.4932631924868536+42.74788682662301%2C+-1.3971082371394707+42.90303023391967%2C+-1.3710090349737383+43.02867199453541%2C+-1.5921654322727588+43.06280215750196%2C+-1.788596269625318+43.02264705344673%2C+-1.7405187919516065+42.8667978158502%29%29}}}
+  
   \label{fig:demo_decline_heatmap}
 \end{figure}
 
@@ -305,7 +317,8 @@ no specialist software.
 \section{Evaluation Methodology}\label{EVAL_METHOD}
 
 The evaluation was conducted as a user study on 3 June 2026 during a
-presentation session at the Universidad de Valladolid attended by students
+presentation session at the Universidad de Valladolid in Palencia at the Yutera campus 
+attended by students
 from multiple European universities participating in an Erasmus+ programme.
 All participants were domain users --- students enrolled in degree programmes
 in forestry, environmental science, or biology --- rather than software
@@ -384,9 +397,9 @@ target audience of domain specialists rather than software developers.
 
 \subsection{System Usability Scale}\label{EVAL_SUS_SCORE}
 
-The System Usability Scale (SUS) is a ten-item Likert questionnaire in which
-alternating items are positively and negatively worded. The raw score for each
-respondent is computed as:
+The System Usability Scale (SUS)~\cite{brooke1996sus} is a ten-item Likert
+questionnaire in which alternating items are positively and negatively worded.
+The raw score for each respondent is computed as:
 
 \[
   \text{SUS} = 2.5 \times \left[
@@ -460,26 +473,28 @@ therefore indicates a strong recommendation intent among the participant group.
 The open-ended responses were analysed thematically. The most frequently
 recurring theme across the 23 responses to the ``liked most'' question was
 \textbf{ease of use and intuitiveness}. Representative comments included:
-``I found it very straightforward to use and it provides very useful and
-interesting data extremely fast''; ``I like how intuitive it is''; and
-``Very easy to use, you can get a lot of information out of it.'' This theme
+\emph{``I found it very straightforward to use and it provides very useful and
+interesting data extremely fast''}; \emph{``I like how intuitive it is''}; and
+\emph{``Very easy to use, you can get a lot of information out of it.''} This theme
 appeared in approximately 80\% of responses, suggesting that the zero-friction
 design goal described in Section~\ref{APP_REQ_NONFUNC} was successfully
 perceived by users.
 
 The second most prominent theme was \textbf{global data coverage and
-accessibility}. Several respondents highlighted the fact that climate data was
-available for any point on the globe without requiring registration or local
-software: ``I found it very easy to use and I also like the fact that data is
-in raster so you can have it at every point of the globe''; ``Access to data
-for any place in the world, fast results, visualisation of climographs and
-heatmaps.''
+accessibility}, mentioned by approximately 25\% of respondents. Several
+highlighted the fact that climate data was available for any point on the
+globe without requiring registration or local software:
+\emph{``I found it very easy to use and I also like the fact that data is
+in raster so you can have it at every point of the globe''}; 
+\emph{``Access to data for any place in the world, fast results, visualisation 
+of climographs and heatmaps.''}
 
-A third theme was \textbf{the comparative and temporal views}. Multiple
-respondents specifically mentioned the city comparison and period comparison
-features as highlights: ``Comparison, having good visualisation of dataset'';
-``The ability to analyse historical climate data and compare it with current
-data allows us to understand and assess climate change.''
+A third theme was \textbf{the comparative and temporal views}, mentioned by
+approximately 10\% of respondents. Several specifically mentioned the city
+comparison and period comparison features as highlights:
+\emph{``Comparison, having good visualisation of dataset''};
+\emph{``The ability to analyse historical climate data and compare it with current
+data allows us to understand and assess climate change.''}
 
 \subsection{What Participants Liked Least}\label{EVAL_QUAL_DISLIKED}
 
@@ -492,8 +507,8 @@ to the export pipeline.
 
 The second reported concern was \textbf{the manual filter application step}.
 Two respondents noted that they had to click ``Apply filters'' after changing
-filter values, which felt unintuitive: ``You have to click on Apply filters
-again''; ``Auto-apply filters when clicking on them.'' This is a deliberate
+filter values, which felt unintuitive: \emph{``You have to click on Apply filters
+again''}; \emph{``Auto-apply filters when clicking on them.''} This is a deliberate
 design decision --- the draft filter pattern described in
 Section~\ref{APP_ARCH_DRAFT} prevents expensive API calls from firing on every
 individual filter change --- but the tradeoff was not immediately obvious to
@@ -505,9 +520,9 @@ and renders them as individual map overlays; at coarse resolutions this is fast,
 but finer resolutions over large bounding boxes can take several seconds.
 
 One technically sophisticated respondent raised the absence of \textbf{raw
-data download}: ``I like least that Climatica doesn't show raw data or let you
+data download}: \emph{``I like least that Climatica doesn't show raw data or let you
 download it easily. Great visuals, but limited access to the underlying
-numbers.'' Currently Climatica supports CSV and PNG export of chart data but
+numbers.''} Currently Climatica supports CSV and PNG export of chart data but
 does not expose the raw SCRAPI response or the pixel value matrix.
 
 \subsection{Suggested Improvements}\label{EVAL_QUAL_SUGGEST}
@@ -525,9 +540,20 @@ asked for \textbf{additional language support} beyond the current three locales.
 
 \subsection{Interpretation of Results}\label{EVAL_DISCUSS_RESULTS}
 
-The quantitative results are encouraging. A mean SUS score of 84.6 places
-Climatica in the \emph{Excellent} range on the Bangor et al.\ adjective scale,
-well above the industry average of 68. The NPS of +44 indicates that a
+The evaluation context adds weight to these results. As part of their course,
+participants had previously prepared Walter-Lieth climatograms by hand for
+several locations, using a set of CSV files circulated by Prof.\ Bravo. Two
+days later, Climatica was presented to the same group, who were able to
+reproduce --- and substantially extend --- the same analysis almost
+automatically, within minutes rather than the hours required for manual
+preparation. This direct before-and-after comparison likely contributed to
+the strongly positive reception of the tool.
+
+The quantitative results are encouraging. A mean SUS score of 84.6 places 
+Climatica in the \emph{Excellent} range on
+the Bangor et al.\ adjective rating scale (which translates numeric SUS
+scores into verbal categories such as Excellent, Good, and Poor), well above
+the industry average of 68. The NPS of +44 indicates that a
 substantial majority of participants would recommend the tool to peers. Both
 metrics suggest that Climatica successfully delivers on its primary design goal
 of being accessible to non-specialist users without requiring GIS or programming
@@ -602,16 +628,17 @@ without requiring an explicit ``Apply'' click, would satisfy the most commonly
 raised workflow complaint. This would require redesigning the draft filter
 pattern to debounce API calls rather than gate them behind a button.
 
-\textbf{Additional climate periods.} Supporting 10-year normals and
+\textbf{Additional climate periods.} One respondent suggested supporting
+10-year normals and
 non-overlapping period ranges would significantly expand the temporal analysis
 capability. These features are technically feasible given the SCRAPI data model,
 which exposes individual weather years from 1951 to 2024.
 
-\textbf{Heatmap performance.} Rendering thousands of \texttt{L.rectangle}
-overlays is the primary bottleneck for large bounding boxes at fine resolution.
-Migrating the heatmap renderer to a WebGL-backed layer (e.g.\ using
-\texttt{leaflet.heat} or a custom Canvas layer) would provide an order-of-magnitude
-performance improvement for large queries.
+\textbf{Heatmap performance.} Two respondents reported slow loading on the
+Region Heatmap page at fine resolutions. Before optimising the rendering
+layer, it would be necessary to profile whether the bottleneck lies in the
+SCRAPI API response time or in the client-side rendering of individual
+\texttt{L.rectangle} overlays.
 
 \textbf{Mobile support.} One respondent requested a mobile application;
 another noted that PNG exports were misaligned on iPad. The current Next.js
