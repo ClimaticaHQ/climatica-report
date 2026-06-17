@@ -189,29 +189,36 @@ requested access to the underlying monthly pixel values. Adding a CSV or JSON
 export of the full SCRAPI response would satisfy this request and extend
 Climatica's utility to users who want to perform their own downstream analysis.
 
-\textbf{10-year climate normals.} The current five 30-year periods provide
-good coverage for long-term trend analysis, but several respondents requested
-finer temporal resolution. Adding 10-year normals and non-overlapping period
-ranges would significantly expand the analytical capability of the Compare
-Periods page.
+\textbf{Additional climate variables.} Climatica currently exposes only four
+of the seven monthly variables available in the WorldClim climate dataset
+(\texttt{tmin}, \texttt{tmax}, \texttt{tavg}, \texttt{prec}); solar radiation
+(\texttt{srad}), wind speed (\texttt{wind}), and vapour pressure
+(\texttt{vapr}) are not yet surfaced in the interface. The SCRAPI API also
+exposes the full set of 19 WorldClim bioclimatic variables (BIO1--BIO19),
+widely used in species distribution modelling and ecological niche analysis.
+Exposing both the remaining monthly variables and the bioclimatic variables
+would substantially extend Climatica's utility for researchers in biogeography
+and ecology.
 
-\textbf{Heatmap performance.} Rendering individual \texttt{L.rectangle}
-overlays for each pixel becomes a bottleneck at fine resolutions over large
-regions. Migrating to a WebGL-backed canvas layer would provide an
-order-of-magnitude performance improvement and make fine-resolution regional
-analysis practical for large study areas.
+\textbf{Future climate projections.} WorldClim also distributes future climate
+projections derived from global climate models (GCMs) under different emission
+scenarios, covering periods such as 2021--2040 and 2041--2060. Integrating
+these projections into Climatica --- alongside the historical data already
+exposed --- would allow users to compare past trends with projected future
+conditions, which is particularly relevant for the forest management use cases
+described in Section~\ref{EVAL_DEMO}.
+
+\textbf{Heatmap performance.} Two respondents reported slow loading on the
+Region Heatmap page at fine resolutions. As discussed in
+Section~\ref{EVAL_DISCUSS_FUTURE}, addressing this would first require
+profiling whether the bottleneck lies in the SCRAPI API response time or in
+client-side rendering.
 
 \textbf{Longitude wraparound fix.} A known limitation identified during
 development is that Leaflet allows the user to pan beyond the $\pm 180^{\circ}$
 longitude boundary, producing coordinates that SCRAPI cannot process. Normalising
 longitudes to $[-180^{\circ}, 180^{\circ}]$ before issuing API requests would
 eliminate this edge case.
-
-\textbf{Bioclimatic variables.} The SCRAPI API exposes the full set of 19
-WorldClim bioclimatic variables (BIO1--BIO19), which are widely used in species
-distribution modelling and ecological niche analysis. Exposing these variables
-through the Climatica interface would substantially extend its utility for
-researchers in biogeography and ecology.
 
 \textbf{Mobile touch support.} The map drawing interactions on the Region
 Heatmap page are currently optimised for mouse input. Adding touch gesture
