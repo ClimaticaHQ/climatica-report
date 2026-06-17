@@ -31,7 +31,7 @@ refined into the four-page application described in Section~\ref{APP_PROTO}.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-v1.png}
+  \includegraphics[width=\textwidth]{Images/climatica-v1.png}
   \caption{Early prototype of Climatica (first iteration). The filter panel
     expanded below the search bar; the single page combined map, chart, and
     controls without a persistent sidebar. This layout was later reorganised
@@ -239,10 +239,9 @@ and \textbf{Solr~8} (the Apache Solr search index that powers city search over
 
 In the original architecture, city search was implemented as a two-step
 Wikidata pipeline described in Section~\ref{APP_ARCH_EVOLUTION}: a
-\texttt{wbsearchentities} call followed by a SPARQL filter query. While this
-approach required no local infrastructure, it was subject to Wikidata's
-soft-throttling policy and offered no way to tune ranking without modifying
-the SPARQL query.
+\texttt{wbsearchentities} call followed by a SPARQL filter query. The
+limitations of this approach are discussed at the end of this section;
+the following paragraphs describe the replacement pipeline.
 
 The replacement pipeline uses GeoNames~\cite{geonames} as the data source.
 GeoNames distributes two datasets: \texttt{allCountries.txt} (approximately
@@ -288,6 +287,17 @@ latitude/longitude pair directly. Both cases call
 GeoSearch request with a 10\,km radius. Because these operations are
 low-frequency and point-in-time, the soft-throttling constraint that affects
 interactive text search does not apply.
+
+\textbf{Why GeoNames and Solr instead of Wikidata.} The migration from
+Wikidata city search to a locally hosted Solr index was motivated by two
+concrete limitations. First, Wikidata applies soft-throttling to high-frequency
+queries from a single origin, causing intermittent failures under rapid typing.
+Second, promoting more populous cities in the results --- for example, ensuring
+that Paris, France ranks above smaller cities named Paris --- required
+post-processing logic on top of the SPARQL results, whereas Solr supports
+native field boosting via the \texttt{population} field in the schema.
+The GeoNames dataset also provides broader and more consistent coverage than
+Wikidata for small settlements, particularly in non-European regions.
 
 \subsection{Caching Strategy with Redis}\label{APP_ARCH_REDIS}
 
@@ -416,39 +426,45 @@ Table~\ref{tab:state}. This stratification avoids the common anti-pattern of
 storing everything in a single global store, which makes it difficult to reason
 about what triggers re-renders and why.
 
-\begin{table}[H]
+\begin{sidewaystable}[p]
   \centering
   \caption{State management strategy in Climatica.}
   \label{tab:state}
-  \begin{adjustbox}{width=1.2\textwidth,center}
-    \small
-    \begin{tabular}{p{4cm}p{3.5cm}p{7cm}}
-      \toprule
-      \textbf{State type} & \textbf{Location} & \textbf{Rationale} \\
-      \midrule
-      Server data (WorldClim, Solr) & TanStack Query &
-        Automatic deduplication; \texttt{staleTime: Infinity} since climate
-        data never changes \\
-      Global filter settings & Zustand + \texttt{persist} &
-        Survives page navigation; persisted to \texttt{localStorage} \\
-      Selected weather years & Zustand + \texttt{persist} &
-        Up to five years retained across sessions \\
-      City sync setting & Zustand + \texttt{persist} &
-        Opt-out toggle; default on \\
-      Shareable UI state & URL search params &
-        Allows bookmarking and sharing specific views \\
-      Last selected city & \texttt{usePersistedCity} hook &
-        Survives hard reload without polluting URL \\
-      Comparison cities & \texttt{usePersistedComparisonCities} hook &
-        Separate store for City~A / City~B \\
-      UI-only state & Local \texttt{useState} &
-        Scoped to component; no need to share \\
-      Derived data & Computed at render time &
-        Never stored; computed from props or query results \\
-      \bottomrule
-    \end{tabular}
-  \end{adjustbox}
-\end{table}
+  \small
+  \begin{tabular}{p{4cm}p{3.5cm}p{10cm}}
+    \toprule
+    \textbf{State type} & \textbf{Location} & \textbf{Rationale} \\
+    \midrule
+    Server data (WorldClim, Solr) & TanStack Query &
+      Automatic deduplication; \texttt{staleTime: Infinity} since climate
+      data never changes \\
+    
+    Global filter settings & Zustand + \texttt{persist} &
+      Survives page navigation; persisted to \texttt{localStorage} \\
+
+    Selected weather years & Zustand + \texttt{persist} &
+      Up to five years retained across sessions \\
+
+    City sync setting & Zustand + \texttt{persist} &
+      Opt-out toggle; default on \\
+
+    Shareable UI state & URL search params &
+      Allows bookmarking and sharing specific views \\
+
+    Last selected city & \texttt{usePersistedCity} hook &
+      Survives hard reload without polluting URL \\
+
+    Comparison cities & \texttt{usePersistedComparisonCities} hook &
+      Separate store for City~A / City~B \\
+
+    UI-only state & Local \texttt{useState} &
+      Scoped to component; no need to share \\
+      
+    Derived data & Computed at render time &
+      Never stored; computed from props or query results \\
+    \bottomrule
+  \end{tabular}
+\end{sidewaystable}
 
 \textbf{Cross-page city synchronisation.} A configurable sync feature
 propagates the selected city across pages when enabled. The setting is stored
@@ -744,7 +760,7 @@ the user can switch between two chart modes:
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-map.png}
+  \includegraphics[width=\textwidth]{Images/climatica-map.png}
   \caption{City Climate page --- map view with location pin, raster cell
     outline, and summary stat cards for Valladolid.}
   \label{fig:page_city_map}
@@ -752,7 +768,7 @@ the user can switch between two chart modes:
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-columns-graph.png}
+  \includegraphics[width=\textwidth]{Images/climatica-columns-graph.png}
   \caption{City Climate page --- standard climograph for Valladolid (weather
     dataset, year 1991). Precipitation is shown as bars; temperature as smooth
     lines. Blue bars indicate humid months; yellow bars indicate arid months.}
@@ -761,7 +777,7 @@ the user can switch between two chart modes:
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-walter-lieth.png}
+  \includegraphics[width=\textwidth]{Images/climatica-walter-lieth.png}
   \caption{City Climate page --- Walter-Lieth climatogram for the same city and
     period. Yellow filled areas indicate arid months; blue filled areas indicate
     humid months.}
@@ -789,7 +805,7 @@ the top-right corner shows the geographic positions of both cities.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-compare-cities.png}
+  \includegraphics[width=\textwidth]{Images/climatica-compare-cities.png}
   \caption{Compare Cities page comparing Rome and Oslo (weather dataset,
     year~1991). The upper section shows city search fields, a mini-map, and a
     colour-coded statistics table; the lower section shows the overlaid
@@ -831,7 +847,7 @@ all overlaid on a single shared chart.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-compare-periods-climate.png}
+  \includegraphics[width=\textwidth]{Images/climatica-compare-periods-climate.png}
   \caption{Compare Periods page --- climate mode for Madrid, comparing the
     1970--2000 and 1991--2020 climate normals. The statistics table shows a
     warming trend (+0.8\,°C avg max) and slight decrease in precipitation
@@ -911,7 +927,7 @@ Figures~\ref{fig:page_heatmap_bbox} and~\ref{fig:page_heatmap_polygon} show
 the heatmap page in bounding box and polygon selection modes respectively.
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-heatmap-bbox.png}
+  \includegraphics[width=\textwidth]{Images/climatica-heatmap-bbox.png}
   \caption{Region Heatmap page --- bounding box selection over Greater London
     (climate dataset, 1961--1990, maximum temperature). The colour scale runs
     from blue (7.0\,°C) to red (8.4\,°C); the regional profile below the map
@@ -922,7 +938,7 @@ the heatmap page in bounding box and polygon selection modes respectively.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.9\textwidth]{Images/climatica-heatmap-polygon.png}
+  \includegraphics[width=\textwidth]{Images/climatica-heatmap-polygon.png}
   \caption{Region Heatmap page --- freeform polygon selection over the island
     of Réunion (climate dataset, 1970--2000, maximum temperature). The polygon
     boundary is drawn by the user vertex by vertex; the application queries all
